@@ -16,6 +16,8 @@
 		8A1F3495166B7F0E00F24A5F /* libGBStorageController.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A1F347C166B7F0E00F24A5F /* libGBStorageController.a */; };
 		8A1F349B166B7F0E00F24A5F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8A1F3499166B7F0E00F24A5F /* InfoPlist.strings */; };
 		8A1F349E166B7F0E00F24A5F /* GBStorageControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A1F349D166B7F0E00F24A5F /* GBStorageControllerTests.m */; };
+		8A814B4E166B839F0097E115 /* libGBToolbox.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A1F34B1166B7F7200F24A5F /* libGBToolbox.a */; };
+		8A814B51166B851A0097E115 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A814B50166B851A0097E115 /* CoreGraphics.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -25,6 +27,34 @@
 			proxyType = 1;
 			remoteGlobalIDString = 8A1F347B166B7F0E00F24A5F;
 			remoteInfo = GBStorageController;
+		};
+		8A1F34B0166B7F7200F24A5F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8A1F34A8166B7F7200F24A5F /* GBToolbox.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8AD911B1162D9E2200C9D287;
+			remoteInfo = GBToolbox;
+		};
+		8A1F34B2166B7F7200F24A5F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8A1F34A8166B7F7200F24A5F /* GBToolbox.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8A0C4E34165FA60C00A990FB;
+			remoteInfo = GBToolboxUnitTests;
+		};
+		8A1F34B8166B7F8200F24A5F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8A1F34A8166B7F7200F24A5F /* GBToolbox.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8AD911B0162D9E2200C9D287;
+			remoteInfo = GBToolbox;
+		};
+		8A814B4C166B839C0097E115 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8A1F34A8166B7F7200F24A5F /* GBToolbox.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8AD911B0162D9E2200C9D287;
+			remoteInfo = GBToolbox;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -54,6 +84,8 @@
 		8A1F349A166B7F0E00F24A5F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		8A1F349C166B7F0E00F24A5F /* GBStorageControllerTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GBStorageControllerTests.h; sourceTree = "<group>"; };
 		8A1F349D166B7F0E00F24A5F /* GBStorageControllerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GBStorageControllerTests.m; sourceTree = "<group>"; };
+		8A1F34A8166B7F7200F24A5F /* GBToolbox.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GBToolbox.xcodeproj; path = ../../GBToolbox/GBToolbox.xcodeproj; sourceTree = "<group>"; };
+		8A814B50166B851A0097E115 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,10 +101,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8A814B51166B851A0097E115 /* CoreGraphics.framework in Frameworks */,
+				8A814B4E166B839F0097E115 /* libGBToolbox.a in Frameworks */,
+				8A1F3495166B7F0E00F24A5F /* libGBStorageController.a in Frameworks */,
 				8A1F348F166B7F0E00F24A5F /* SenTestingKit.framework in Frameworks */,
 				8A1F3491166B7F0E00F24A5F /* UIKit.framework in Frameworks */,
 				8A1F3492166B7F0E00F24A5F /* Foundation.framework in Frameworks */,
-				8A1F3495166B7F0E00F24A5F /* libGBStorageController.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -101,6 +135,7 @@
 		8A1F347E166B7F0E00F24A5F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8A814B50166B851A0097E115 /* CoreGraphics.framework */,
 				8A1F347F166B7F0E00F24A5F /* Foundation.framework */,
 				8A1F348E166B7F0E00F24A5F /* SenTestingKit.framework */,
 				8A1F3490166B7F0E00F24A5F /* UIKit.framework */,
@@ -111,8 +146,8 @@
 		8A1F3481166B7F0E00F24A5F /* GBStorageController */ = {
 			isa = PBXGroup;
 			children = (
-				8A1F3484166B7F0E00F24A5F /* GBStorageController.h */,
-				8A1F3486166B7F0E00F24A5F /* GBStorageController.m */,
+				8A1F34B4166B7F7500F24A5F /* Libraries */,
+				8A1F34A7166B7F1600F24A5F /* Code */,
 				8A1F3482166B7F0E00F24A5F /* Supporting Files */,
 			);
 			path = GBStorageController;
@@ -145,6 +180,32 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		8A1F34A7166B7F1600F24A5F /* Code */ = {
+			isa = PBXGroup;
+			children = (
+				8A1F3484166B7F0E00F24A5F /* GBStorageController.h */,
+				8A1F3486166B7F0E00F24A5F /* GBStorageController.m */,
+			);
+			name = Code;
+			sourceTree = "<group>";
+		};
+		8A1F34A9166B7F7200F24A5F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8A1F34B1166B7F7200F24A5F /* libGBToolbox.a */,
+				8A1F34B3166B7F7200F24A5F /* GBToolboxUnitTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		8A1F34B4166B7F7500F24A5F /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				8A1F34A8166B7F7200F24A5F /* GBToolbox.xcodeproj */,
+			);
+			name = Libraries;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -159,6 +220,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				8A1F34B9166B7F8200F24A5F /* PBXTargetDependency */,
 			);
 			name = GBStorageController;
 			productName = GBStorageController;
@@ -177,6 +239,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				8A814B4D166B839C0097E115 /* PBXTargetDependency */,
 				8A1F3494166B7F0E00F24A5F /* PBXTargetDependency */,
 			);
 			name = GBStorageControllerTests;
@@ -203,6 +266,12 @@
 			mainGroup = 8A1F3471166B7F0E00F24A5F;
 			productRefGroup = 8A1F347D166B7F0E00F24A5F /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 8A1F34A9166B7F7200F24A5F /* Products */;
+					ProjectRef = 8A1F34A8166B7F7200F24A5F /* GBToolbox.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				8A1F347B166B7F0E00F24A5F /* GBStorageController */,
@@ -210,6 +279,23 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		8A1F34B1166B7F7200F24A5F /* libGBToolbox.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libGBToolbox.a;
+			remoteRef = 8A1F34B0166B7F7200F24A5F /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8A1F34B3166B7F7200F24A5F /* GBToolboxUnitTests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = GBToolboxUnitTests.octest;
+			remoteRef = 8A1F34B2166B7F7200F24A5F /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		8A1F348A166B7F0E00F24A5F /* Resources */ = {
@@ -263,6 +349,16 @@
 			target = 8A1F347B166B7F0E00F24A5F /* GBStorageController */;
 			targetProxy = 8A1F3493166B7F0E00F24A5F /* PBXContainerItemProxy */;
 		};
+		8A1F34B9166B7F8200F24A5F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = GBToolbox;
+			targetProxy = 8A1F34B8166B7F8200F24A5F /* PBXContainerItemProxy */;
+		};
+		8A814B4D166B839C0097E115 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = GBToolbox;
+			targetProxy = 8A814B4C166B839C0097E115 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
@@ -298,8 +394,10 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				HEADER_SEARCH_PATHS = "../**";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "-ObjC";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -318,7 +416,9 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				HEADER_SEARCH_PATHS = "../**";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_LDFLAGS = "-ObjC";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -397,6 +497,7 @@
 				8A1F34A3166B7F0E00F24A5F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		8A1F34A4166B7F0E00F24A5F /* Build configuration list for PBXNativeTarget "GBStorageControllerTests" */ = {
 			isa = XCConfigurationList;
@@ -405,6 +506,7 @@
 				8A1F34A6166B7F0E00F24A5F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
