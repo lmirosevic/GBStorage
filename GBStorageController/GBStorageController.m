@@ -40,7 +40,7 @@ _lazy(NSMutableDictionary, cache, _cache)
 
 -(id)objectForKeyedSubscript:(id)key {
     //make sure key is a string
-    if (ValidString(key)) {
+    if (IsValidString(key)) {
         //if not in cache
         if (!self.cache[key]) {
             //load it
@@ -57,7 +57,7 @@ _lazy(NSMutableDictionary, cache, _cache)
 }
 
 -(void)setObject:(id <NSCoding>)object forKeyedSubscript:(id)key {
-    if (object && ValidString(key)) {
+    if (object && IsValidString(key)) {
         //put it in the cache
         self.cache[key] = object;
     }
@@ -76,7 +76,7 @@ _lazy(NSMutableDictionary, cache, _cache)
 }
 
 -(void)save:(NSString *)key {
-    if (ValidString(key)) {
+    if (IsValidString(key)) {
         //make sure object isnt nil, otherwise dont save it
         id object = self.cache[key];
         if (object) {
@@ -90,7 +90,7 @@ _lazy(NSMutableDictionary, cache, _cache)
 }
 
 -(void)preLoad:(NSString *)key {
-    if (ValidString(key)) {
+    if (IsValidString(key)) {
         //load it from disk and save
         id object = [self _readObjectFromDiskForKey:key];
         
@@ -110,7 +110,7 @@ _lazy(NSMutableDictionary, cache, _cache)
 }
 
 -(void)clearCacheForKey:(NSString *)key {
-    if (ValidString(key)) {
+    if (IsValidString(key)) {
         //clear that key from cache
         [self.cache removeObjectForKey:key];
     }
@@ -121,7 +121,7 @@ _lazy(NSMutableDictionary, cache, _cache)
 }
 
 -(void)deletePermanently:(NSString *)key {
-    if (ValidString(key)) {
+    if (IsValidString(key)) {
         //remove from cache
         [self clearCacheForKey:key];
         
@@ -144,7 +144,7 @@ _lazy(NSMutableDictionary, cache, _cache)
 }
 
 -(void)_saveObject:(id <NSCoding>)object toDiskForKey:(NSString *)key {
-    if (ValidString(key)) {
+    if (IsValidString(key)) {
         //save to disk
         @try {
             [NSKeyedArchiver archiveRootObject:object toFile:[self _dbSavePathForKey:key]];

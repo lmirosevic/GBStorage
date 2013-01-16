@@ -22,6 +22,7 @@
 @interface GBStorageController : NSObject
 
 //singleton
+#define GBStorage ([GBStorageController sharedController])
 #define _sc ([GBStorageController sharedController])
 +(GBStorageController *)sharedController;
 
