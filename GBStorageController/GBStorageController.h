@@ -21,9 +21,11 @@
 
 @interface GBStorageController : NSObject
 
-//singleton
+//Convenience
 #define GBStorage ([GBStorageController sharedController])
 #define _sc ([GBStorageController sharedController])
+
+//singleton
 +(GBStorageController *)sharedController;
 
 //keyed indexing
@@ -49,8 +51,3 @@
 -(void)deletePermanently:(NSString *)key;
 
 @end
-
-// Usage
-//
-// [GBStorageController sharedController]["dog"]
-// [[GBStorageController sharedController] save]
