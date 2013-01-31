@@ -116,6 +116,7 @@
 		8A1F3471166B7F0E00F24A5F = {
 			isa = PBXGroup;
 			children = (
+				8A1F34B4166B7F7500F24A5F /* Libraries */,
 				8A1F3481166B7F0E00F24A5F /* GBStorageController */,
 				8A1F3496166B7F0E00F24A5F /* GBStorageControllerTests */,
 				8A1F347E166B7F0E00F24A5F /* Frameworks */,
@@ -146,7 +147,6 @@
 		8A1F3481166B7F0E00F24A5F /* GBStorageController */ = {
 			isa = PBXGroup;
 			children = (
-				8A1F34B4166B7F7500F24A5F /* Libraries */,
 				8A1F34A7166B7F1600F24A5F /* Code */,
 				8A1F3482166B7F0E00F24A5F /* Supporting Files */,
 			);
@@ -204,6 +204,7 @@
 				8A1F34A8166B7F7200F24A5F /* GBToolbox.xcodeproj */,
 			);
 			name = Libraries;
+			path = GBStorageController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
