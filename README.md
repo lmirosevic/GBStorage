@@ -60,7 +60,7 @@ Dependencies
 
 Add dependency, link, -ObjC linker flag, header search path in superproject.
 
-* GBToolbox
+* [GBToolbox](https://github.com/lmirosevic/GBToolbox)
 
 Copyright & License
 ------------
