@@ -29,8 +29,8 @@
 +(GBStorageController *)sharedController;
 
 //keyed indexing
--(id)objectForKeyedSubscript:(id)key;//try this with a string only
--(void)setObject:(id<NSCoding>)object forKeyedSubscript:(id <NSCopying>)key;
+-(id)objectForKeyedSubscript:(NSString *)key;
+-(void)setObject:(id<NSCoding>)object forKeyedSubscript:(NSString *)key;
 
 //save all objects. see below ref rewriting
 -(void)save;

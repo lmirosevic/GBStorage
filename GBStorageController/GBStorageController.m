@@ -56,7 +56,7 @@ _lazy(NSMutableDictionary, cache, _cache)
     }
 }
 
--(void)setObject:(id <NSCoding>)object forKeyedSubscript:(id)key {
+-(void)setObject:(id<NSCoding>)object forKeyedSubscript:(NSString *)key {
     if (object && IsValidString(key)) {
         //put it in the cache
         self.cache[key] = object;
