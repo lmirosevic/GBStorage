@@ -46,6 +46,15 @@ Deleting:
 [GBStorage deletePermanently:@"bigObject"];	//deletes data from disk and cache
 ```
 
+Storage
+------------
+
+Objects *stored* in the in-memory cache are simply retained with a strong pointer. If they could mutate it might be a good idea to pass in a copy to the `GBStorageController`. Once you've stored an object into `GBStorageController`, you CAN mutate the object but you have to keep in mind that the changes won't persist to disk until you call `[GBStorage save]`. Objects are not automatically copied for performance reasons.
+
+Keys need to be of type `NSString`. They are automatically copied to avoid undefined behaviour if you were to mutate them.
+
+Objects which you pass to `GBStorageController` must conform to the NSCoding protocol. This is so that objects can be serialised to disk.
+
 Dependencies
 ------------
 
