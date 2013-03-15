@@ -65,9 +65,9 @@ Dependencies
 
 * [GBToolbox](https://github.com/lmirosevic/GBToolbox)
 
-iOS: Add to your project's workspace, add dependency for GBVersionTracking-iOS, link with your binary, add -ObjC linker flag, add header search path.
+iOS: Add to your project's workspace, add dependency for GBToolbox-iOS, link with your binary, add -ObjC linker flag, add header search path.
 
-OS X: Add to your project's workspace, add dependency for GBVersionTracking-OSX, link with your binary, add "copy file" step to copy framework into bundle.
+OS X: Add to your project's workspace, add dependency for GBToolbox-OSX, link with your binary, add "copy file" step to copy framework into bundle.
 
 Copyright & License
 ------------

@@ -90,6 +90,13 @@
 			remoteGlobalIDString = 8ABE7BBF16F32E280015FE1F;
 			remoteInfo = "GBStorageController-OSX";
 		};
+		8ABE7C9D16F345010015FE1F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8A1F34A8166B7F7200F24A5F /* GBToolbox.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8A0377FA16BFCD2F0096C448;
+			remoteInfo = "GBToolbox-OSX";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -111,7 +118,7 @@
 		8A1F3483166B7F0E00F24A5F /* GBStorageController-iOS-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GBStorageController-iOS-Prefix.pch"; sourceTree = "<group>"; };
 		8A1F3484166B7F0E00F24A5F /* GBStorageController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GBStorageController.h; sourceTree = "<group>"; };
 		8A1F3486166B7F0E00F24A5F /* GBStorageController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GBStorageController.m; sourceTree = "<group>"; };
-		8A1F348D166B7F0E00F24A5F /* GBStorageControllerTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GBStorageControllerTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		8A1F348D166B7F0E00F24A5F /* GBStorageControllerTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = GBStorageControllerTests.octest; path = "GBStorageController-iOS-UnitTests.octest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8A1F3490166B7F0E00F24A5F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		8A1F3498166B7F0E00F24A5F /* GBStorageControllerTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GBStorageControllerTests-Info.plist"; sourceTree = "<group>"; };
 		8A1F349A166B7F0E00F24A5F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -369,6 +376,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				8ABE7C9E16F345010015FE1F /* PBXTargetDependency */,
 			);
 			name = "GBStorageController-OSX";
 			productName = "GBStorageController-OSX";
@@ -568,6 +576,11 @@
 			isa = PBXTargetDependency;
 			target = 8ABE7BBF16F32E280015FE1F /* GBStorageController-OSX */;
 			targetProxy = 8ABE7C1F16F336E40015FE1F /* PBXContainerItemProxy */;
+		};
+		8ABE7C9E16F345010015FE1F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "GBToolbox-OSX";
+			targetProxy = 8ABE7C9D16F345010015FE1F /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -830,6 +843,7 @@
 				8ABE7C0A16F335F40015FE1F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
