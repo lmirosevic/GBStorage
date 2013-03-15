@@ -1,28 +1,22 @@
 GBStorageController
 ============
 
-Simple iOS persistence layer with in memory caching
+Simple iOS and Mac OS X persistence layer with in memory caching and preloading.
 
 Usage
 ------------
 
-First import header:
-
-```objective-c
-#import "GBStorageController.h"
-```
-
 Storing:
 
 ```objective-c
-GBStorageController[@"name"] = @"Luka";		//saves in-memory only
-[GBStorageController save];					//syncs in-memory changes to disk
+GBStorage[@"name"] = @"Luka";				//saves in-memory only
+[GBStorage save];							//syncs in-memory changes to disk
 ```
 
 Reading:
 
 ```objective-c
-GBStorageController[@"name"];				//returns "Luka", checks cache first, if not found reads from disk
+GBStorage[@"name"];							//returns "Luka", checks cache first, if not found reads from disk
 ```
 
 Specific sync:
@@ -46,7 +40,18 @@ Deleting:
 [GBStorage deletePermanently:@"bigObject"];	//deletes data from disk and cache
 ```
 
-Storage
+Don't forget to import header, for iOS:
+
+```objective-c
+#import "GBStorageController.h"
+```
+
+... or on OSX:
+```objective-c
+#import <GBStorageController/GBStorageController.h>
+```
+
+Storage mechanics
 ------------
 
 Objects *stored* in the in-memory cache are simply retained with a strong pointer. If they could mutate it might be a good idea to pass in a copy to the `GBStorageController`. Once you've stored an object into `GBStorageController`, you CAN mutate the object but you have to keep in mind that the changes won't persist to disk until you call `[GBStorage save]`. Objects are not automatically copied for performance reasons.
@@ -58,9 +63,11 @@ Objects which you pass to `GBStorageController` must conform to the NSCoding pro
 Dependencies
 ------------
 
-Add dependency, link, -ObjC linker flag, header search path in superproject.
-
 * [GBToolbox](https://github.com/lmirosevic/GBToolbox)
+
+iOS: Add to your project's workspace, add dependency for GBVersionTracking-iOS, link with your binary, add -ObjC linker flag, add header search path.
+
+OS X: Add to your project's workspace, add dependency for GBVersionTracking-OSX, link with your binary, add "copy file" step to copy framework into bundle.
 
 Copyright & License
 ------------
