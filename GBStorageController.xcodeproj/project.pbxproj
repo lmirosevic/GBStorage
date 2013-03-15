@@ -56,6 +56,13 @@
 			remoteGlobalIDString = 8AD911B0162D9E2200C9D287;
 			remoteInfo = GBToolbox;
 		};
+		8ABE7BB916F32DEC0015FE1F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8A1F34A8166B7F7200F24A5F /* GBToolbox.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8A0377FB16BFCD2F0096C448;
+			remoteInfo = "GBToolbox-OSX";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -147,7 +154,8 @@
 		8A1F3481166B7F0E00F24A5F /* GBStorageController */ = {
 			isa = PBXGroup;
 			children = (
-				8A1F34A7166B7F1600F24A5F /* Code */,
+				8A1F3484166B7F0E00F24A5F /* GBStorageController.h */,
+				8A1F3486166B7F0E00F24A5F /* GBStorageController.m */,
 				8A1F3482166B7F0E00F24A5F /* Supporting Files */,
 			);
 			path = GBStorageController;
@@ -180,20 +188,12 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		8A1F34A7166B7F1600F24A5F /* Code */ = {
-			isa = PBXGroup;
-			children = (
-				8A1F3484166B7F0E00F24A5F /* GBStorageController.h */,
-				8A1F3486166B7F0E00F24A5F /* GBStorageController.m */,
-			);
-			name = Code;
-			sourceTree = "<group>";
-		};
 		8A1F34A9166B7F7200F24A5F /* Products */ = {
 			isa = PBXGroup;
 			children = (
 				8A1F34B1166B7F7200F24A5F /* libGBToolbox.a */,
 				8A1F34B3166B7F7200F24A5F /* GBToolboxUnitTests.octest */,
+				8ABE7BBA16F32DEC0015FE1F /* GBToolbox.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -294,6 +294,13 @@
 			fileType = wrapper.cfbundle;
 			path = GBToolboxUnitTests.octest;
 			remoteRef = 8A1F34B2166B7F7200F24A5F /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8ABE7BBA16F32DEC0015FE1F /* GBToolbox.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = GBToolbox.framework;
+			remoteRef = 8ABE7BB916F32DEC0015FE1F /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */

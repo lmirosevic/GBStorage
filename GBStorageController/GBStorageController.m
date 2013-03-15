@@ -51,7 +51,7 @@ _lazy(NSMutableDictionary, cache, _cache)
         return self.cache[key];
     }
     else {
-        l(@"GBStorageController: key must be non-empty NSString");
+        @throw [NSException exceptionWithName:@"GBStorageController error" reason:@"key must be non-empty NSString" userInfo:nil];
         return nil;
     }
 }
@@ -62,7 +62,7 @@ _lazy(NSMutableDictionary, cache, _cache)
         self.cache[key] = object;
     }
     else {
-        l(@"GBStorageController: key must be non-empty NSString, and object must also be non-nil");
+        @throw [NSException exceptionWithName:@"GBStorageController error" reason:@"key must be non-empty NSString, and object must also be non-nil" userInfo:nil];
     }
 }
 
@@ -85,7 +85,7 @@ _lazy(NSMutableDictionary, cache, _cache)
         }
     }
     else {
-        l(@"GBStorageController: key must be non-empty NSString, and object must be in cache");
+        @throw [NSException exceptionWithName:@"GBStorageController error" reason:@"key must be non-empty NSString, and object must be in cache" userInfo:nil];
     }
 }
 
@@ -100,7 +100,7 @@ _lazy(NSMutableDictionary, cache, _cache)
         }
     }
     else {
-        l(@"GBStorageController: key must be non-empty NSString");
+        @throw [NSException exceptionWithName:@"GBStorageController error" reason:@"key must be non-empty NSString" userInfo:nil];
     }
 }
 
@@ -115,7 +115,7 @@ _lazy(NSMutableDictionary, cache, _cache)
         [self.cache removeObjectForKey:key];
     }
     else {
-        l(@"GBStorageController: key must be non-empty NSString");
+        @throw [NSException exceptionWithName:@"GBStorageController error" reason:@"key must be non-empty NSString" userInfo:nil];
     }
     
 }
@@ -129,7 +129,7 @@ _lazy(NSMutableDictionary, cache, _cache)
         [self _deleteObjectFromDiskForKey:key];
     }
     else {
-        l(@"GBStorageController: key must be non-empty NSString");
+        @throw [NSException exceptionWithName:@"GBStorageController error" reason:@"key must be non-empty NSString" userInfo:nil];
     }
 }
 
@@ -150,11 +150,11 @@ _lazy(NSMutableDictionary, cache, _cache)
             [NSKeyedArchiver archiveRootObject:object toFile:[self _dbSavePathForKey:key]];
         }
         @catch (NSException *exception) {
-            NSLog(@"GBStorageController: something went wrong with storing db to disk");
+            @throw [NSException exceptionWithName:@"GBStorageController error" reason:@"something went wrong with archiving db to disk" userInfo:nil];
         }
     }
     else {
-        l(@"GBStorageController: key must be non-empty NSString");
+        @throw [NSException exceptionWithName:@"GBStorageController error" reason:@"key must be non-empty NSString" userInfo:nil];
     }
 }
 
@@ -168,7 +168,7 @@ _lazy(NSMutableDictionary, cache, _cache)
         }
     }
     @catch (NSException *exception) {
-        NSLog(@"GBStorageController: something went wrong with loading db from disk");
+        @throw [NSException exceptionWithName:@"GBStorageController error" reason:@"something went wrong with loading db from disk" userInfo:nil];
     }
     
     //return object, may be nil
@@ -186,7 +186,7 @@ _lazy(NSMutableDictionary, cache, _cache)
         }
     }
     @catch (NSException *exception) {
-        NSLog(@"GBStorageController: something went wrong with deleting db from disk. Error: %@", error.description);
+        @throw [NSException exceptionWithName:@"GBStorageController error" reason:@"something went wrong with deleting db to disk" userInfo:nil];
     }
 }
 
