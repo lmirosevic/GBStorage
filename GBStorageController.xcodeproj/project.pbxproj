@@ -10,7 +10,6 @@
 		8A1F3480166B7F0E00F24A5F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A1F347F166B7F0E00F24A5F /* Foundation.framework */; };
 		8A1F3485166B7F0E00F24A5F /* GBStorageController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8A1F3484166B7F0E00F24A5F /* GBStorageController.h */; };
 		8A1F3487166B7F0E00F24A5F /* GBStorageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A1F3486166B7F0E00F24A5F /* GBStorageController.m */; };
-		8A1F348F166B7F0E00F24A5F /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A1F348E166B7F0E00F24A5F /* SenTestingKit.framework */; };
 		8A1F3491166B7F0E00F24A5F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A1F3490166B7F0E00F24A5F /* UIKit.framework */; };
 		8A1F3492166B7F0E00F24A5F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A1F347F166B7F0E00F24A5F /* Foundation.framework */; };
 		8A1F3495166B7F0E00F24A5F /* libGBStorageController.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A1F347C166B7F0E00F24A5F /* libGBStorageController.a */; };
@@ -18,6 +17,20 @@
 		8A1F349E166B7F0E00F24A5F /* GBStorageControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A1F349D166B7F0E00F24A5F /* GBStorageControllerTests.m */; };
 		8A814B4E166B839F0097E115 /* libGBToolbox.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A1F34B1166B7F7200F24A5F /* libGBToolbox.a */; };
 		8A814B51166B851A0097E115 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A814B50166B851A0097E115 /* CoreGraphics.framework */; };
+		8ABE7BC216F32E280015FE1F /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8ABE7BC116F32E280015FE1F /* Cocoa.framework */; };
+		8ABE7BD416F32ECF0015FE1F /* GBStorageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A1F3486166B7F0E00F24A5F /* GBStorageController.m */; };
+		8ABE7BD516F32ED40015FE1F /* GBStorageController.h in Headers */ = {isa = PBXBuildFile; fileRef = 8A1F3484166B7F0E00F24A5F /* GBStorageController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8ABE7BD716F32F4C0015FE1F /* GBStorageController-OSX-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 8ABE7BD616F32F4C0015FE1F /* GBStorageController-OSX-Prefix.pch */; };
+		8ABE7BF516F335300015FE1F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8ABE7BF416F335300015FE1F /* QuartzCore.framework */; };
+		8ABE7BFD16F335F40015FE1F /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8ABE7BC116F32E280015FE1F /* Cocoa.framework */; };
+		8ABE7C1516F336730015FE1F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8ABE7C1416F336730015FE1F /* QuartzCore.framework */; };
+		8ABE7C1716F336780015FE1F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8ABE7C1616F336780015FE1F /* CoreGraphics.framework */; };
+		8ABE7C1916F3367E0015FE1F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8ABE7C1816F3367E0015FE1F /* Foundation.framework */; };
+		8ABE7C1B16F336A80015FE1F /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8ABE7C1A16F336A80015FE1F /* SenTestingKit.framework */; };
+		8ABE7C1C16F336AF0015FE1F /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8ABE7C1A16F336A80015FE1F /* SenTestingKit.framework */; };
+		8ABE7C2116F336EF0015FE1F /* GBToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8ABE7BBA16F32DEC0015FE1F /* GBToolbox.framework */; };
+		8ABE7C2216F336F20015FE1F /* GBStorageController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8ABE7BC016F32E280015FE1F /* GBStorageController.framework */; };
+		8ABE7C2316F338430015FE1F /* GBStorageControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A1F349D166B7F0E00F24A5F /* GBStorageControllerTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +76,20 @@
 			remoteGlobalIDString = 8A0377FB16BFCD2F0096C448;
 			remoteInfo = "GBToolbox-OSX";
 		};
+		8ABE7C1D16F336E00015FE1F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8A1F34A8166B7F7200F24A5F /* GBToolbox.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8A0377FA16BFCD2F0096C448;
+			remoteInfo = "GBToolbox-OSX";
+		};
+		8ABE7C1F16F336E40015FE1F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8A1F3473166B7F0E00F24A5F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8ABE7BBF16F32E280015FE1F;
+			remoteInfo = "GBStorageController-OSX";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -81,11 +108,10 @@
 /* Begin PBXFileReference section */
 		8A1F347C166B7F0E00F24A5F /* libGBStorageController.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libGBStorageController.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		8A1F347F166B7F0E00F24A5F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		8A1F3483166B7F0E00F24A5F /* GBStorageController-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GBStorageController-Prefix.pch"; sourceTree = "<group>"; };
+		8A1F3483166B7F0E00F24A5F /* GBStorageController-iOS-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GBStorageController-iOS-Prefix.pch"; sourceTree = "<group>"; };
 		8A1F3484166B7F0E00F24A5F /* GBStorageController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GBStorageController.h; sourceTree = "<group>"; };
 		8A1F3486166B7F0E00F24A5F /* GBStorageController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GBStorageController.m; sourceTree = "<group>"; };
 		8A1F348D166B7F0E00F24A5F /* GBStorageControllerTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GBStorageControllerTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
-		8A1F348E166B7F0E00F24A5F /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		8A1F3490166B7F0E00F24A5F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		8A1F3498166B7F0E00F24A5F /* GBStorageControllerTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GBStorageControllerTests-Info.plist"; sourceTree = "<group>"; };
 		8A1F349A166B7F0E00F24A5F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -93,6 +119,18 @@
 		8A1F349D166B7F0E00F24A5F /* GBStorageControllerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GBStorageControllerTests.m; sourceTree = "<group>"; };
 		8A1F34A8166B7F7200F24A5F /* GBToolbox.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GBToolbox.xcodeproj; path = ../../GBToolbox/GBToolbox.xcodeproj; sourceTree = "<group>"; };
 		8A814B50166B851A0097E115 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		8ABE7BC016F32E280015FE1F /* GBStorageController.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GBStorageController.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8ABE7BC116F32E280015FE1F /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
+		8ABE7BC416F32E280015FE1F /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		8ABE7BC516F32E280015FE1F /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		8ABE7BC616F32E280015FE1F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		8ABE7BD616F32F4C0015FE1F /* GBStorageController-OSX-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GBStorageController-OSX-Prefix.pch"; sourceTree = "<group>"; };
+		8ABE7BF416F335300015FE1F /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		8ABE7BFB16F335F40015FE1F /* GBStorageController-OSX-UnitTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "GBStorageController-OSX-UnitTests.octest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8ABE7C1416F336730015FE1F /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
+		8ABE7C1616F336780015FE1F /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
+		8ABE7C1816F3367E0015FE1F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		8ABE7C1A16F336A80015FE1F /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,12 +146,35 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8ABE7C1B16F336A80015FE1F /* SenTestingKit.framework in Frameworks */,
+				8ABE7BF516F335300015FE1F /* QuartzCore.framework in Frameworks */,
 				8A814B51166B851A0097E115 /* CoreGraphics.framework in Frameworks */,
 				8A814B4E166B839F0097E115 /* libGBToolbox.a in Frameworks */,
 				8A1F3495166B7F0E00F24A5F /* libGBStorageController.a in Frameworks */,
-				8A1F348F166B7F0E00F24A5F /* SenTestingKit.framework in Frameworks */,
 				8A1F3491166B7F0E00F24A5F /* UIKit.framework in Frameworks */,
 				8A1F3492166B7F0E00F24A5F /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8ABE7BBC16F32E280015FE1F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8ABE7BC216F32E280015FE1F /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8ABE7BF716F335F40015FE1F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8ABE7C2216F336F20015FE1F /* GBStorageController.framework in Frameworks */,
+				8ABE7C2116F336EF0015FE1F /* GBToolbox.framework in Frameworks */,
+				8ABE7C1C16F336AF0015FE1F /* SenTestingKit.framework in Frameworks */,
+				8ABE7C1916F3367E0015FE1F /* Foundation.framework in Frameworks */,
+				8ABE7C1716F336780015FE1F /* CoreGraphics.framework in Frameworks */,
+				8ABE7C1516F336730015FE1F /* QuartzCore.framework in Frameworks */,
+				8ABE7BFD16F335F40015FE1F /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -125,7 +186,7 @@
 			children = (
 				8A1F34B4166B7F7500F24A5F /* Libraries */,
 				8A1F3481166B7F0E00F24A5F /* GBStorageController */,
-				8A1F3496166B7F0E00F24A5F /* GBStorageControllerTests */,
+				8A1F3496166B7F0E00F24A5F /* GBStorageControllerUnitTests */,
 				8A1F347E166B7F0E00F24A5F /* Frameworks */,
 				8A1F347D166B7F0E00F24A5F /* Products */,
 			);
@@ -136,6 +197,8 @@
 			children = (
 				8A1F347C166B7F0E00F24A5F /* libGBStorageController.a */,
 				8A1F348D166B7F0E00F24A5F /* GBStorageControllerTests.octest */,
+				8ABE7BC016F32E280015FE1F /* GBStorageController.framework */,
+				8ABE7BFB16F335F40015FE1F /* GBStorageController-OSX-UnitTests.octest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -143,10 +206,9 @@
 		8A1F347E166B7F0E00F24A5F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				8A814B50166B851A0097E115 /* CoreGraphics.framework */,
-				8A1F347F166B7F0E00F24A5F /* Foundation.framework */,
-				8A1F348E166B7F0E00F24A5F /* SenTestingKit.framework */,
-				8A1F3490166B7F0E00F24A5F /* UIKit.framework */,
+				8ABE7C1316F3366B0015FE1F /* OSX */,
+				8ABE7C1216F336660015FE1F /* iOS */,
+				8ABE7BC316F32E280015FE1F /* Common */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -164,18 +226,20 @@
 		8A1F3482166B7F0E00F24A5F /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				8A1F3483166B7F0E00F24A5F /* GBStorageController-Prefix.pch */,
+				8A1F3483166B7F0E00F24A5F /* GBStorageController-iOS-Prefix.pch */,
+				8ABE7BD616F32F4C0015FE1F /* GBStorageController-OSX-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		8A1F3496166B7F0E00F24A5F /* GBStorageControllerTests */ = {
+		8A1F3496166B7F0E00F24A5F /* GBStorageControllerUnitTests */ = {
 			isa = PBXGroup;
 			children = (
 				8A1F349C166B7F0E00F24A5F /* GBStorageControllerTests.h */,
 				8A1F349D166B7F0E00F24A5F /* GBStorageControllerTests.m */,
 				8A1F3497166B7F0E00F24A5F /* Supporting Files */,
 			);
+			name = GBStorageControllerUnitTests;
 			path = GBStorageControllerTests;
 			sourceTree = "<group>";
 		};
@@ -207,12 +271,57 @@
 			path = GBStorageController;
 			sourceTree = "<group>";
 		};
+		8ABE7BC316F32E280015FE1F /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				8ABE7C1A16F336A80015FE1F /* SenTestingKit.framework */,
+			);
+			name = Common;
+			sourceTree = "<group>";
+		};
+		8ABE7C1216F336660015FE1F /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				8ABE7BC516F32E280015FE1F /* CoreData.framework */,
+				8ABE7BC616F32E280015FE1F /* Foundation.framework */,
+				8A1F3490166B7F0E00F24A5F /* UIKit.framework */,
+				8ABE7BF416F335300015FE1F /* QuartzCore.framework */,
+				8A814B50166B851A0097E115 /* CoreGraphics.framework */,
+				8A1F347F166B7F0E00F24A5F /* Foundation.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		8ABE7C1316F3366B0015FE1F /* OSX */ = {
+			isa = PBXGroup;
+			children = (
+				8ABE7BC416F32E280015FE1F /* AppKit.framework */,
+				8ABE7BC116F32E280015FE1F /* Cocoa.framework */,
+				8ABE7C1816F3367E0015FE1F /* Foundation.framework */,
+				8ABE7C1616F336780015FE1F /* CoreGraphics.framework */,
+				8ABE7C1416F336730015FE1F /* QuartzCore.framework */,
+			);
+			name = OSX;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
+/* Begin PBXHeadersBuildPhase section */
+		8ABE7BBD16F32E280015FE1F /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8ABE7BD516F32ED40015FE1F /* GBStorageController.h in Headers */,
+				8ABE7BD716F32F4C0015FE1F /* GBStorageController-OSX-Prefix.pch in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
 /* Begin PBXNativeTarget section */
-		8A1F347B166B7F0E00F24A5F /* GBStorageController */ = {
+		8A1F347B166B7F0E00F24A5F /* GBStorageController-iOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 8A1F34A1166B7F0E00F24A5F /* Build configuration list for PBXNativeTarget "GBStorageController" */;
+			buildConfigurationList = 8A1F34A1166B7F0E00F24A5F /* Build configuration list for PBXNativeTarget "GBStorageController-iOS" */;
 			buildPhases = (
 				8A1F3478166B7F0E00F24A5F /* Sources */,
 				8A1F3479166B7F0E00F24A5F /* Frameworks */,
@@ -223,14 +332,14 @@
 			dependencies = (
 				8A1F34B9166B7F8200F24A5F /* PBXTargetDependency */,
 			);
-			name = GBStorageController;
+			name = "GBStorageController-iOS";
 			productName = GBStorageController;
 			productReference = 8A1F347C166B7F0E00F24A5F /* libGBStorageController.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		8A1F348C166B7F0E00F24A5F /* GBStorageControllerTests */ = {
+		8A1F348C166B7F0E00F24A5F /* GBStorageController-iOS-UnitTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 8A1F34A4166B7F0E00F24A5F /* Build configuration list for PBXNativeTarget "GBStorageControllerTests" */;
+			buildConfigurationList = 8A1F34A4166B7F0E00F24A5F /* Build configuration list for PBXNativeTarget "GBStorageController-iOS-UnitTests" */;
 			buildPhases = (
 				8A1F3488166B7F0E00F24A5F /* Sources */,
 				8A1F3489166B7F0E00F24A5F /* Frameworks */,
@@ -243,9 +352,47 @@
 				8A814B4D166B839C0097E115 /* PBXTargetDependency */,
 				8A1F3494166B7F0E00F24A5F /* PBXTargetDependency */,
 			);
-			name = GBStorageControllerTests;
+			name = "GBStorageController-iOS-UnitTests";
 			productName = GBStorageControllerTests;
 			productReference = 8A1F348D166B7F0E00F24A5F /* GBStorageControllerTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+		8ABE7BBF16F32E280015FE1F /* GBStorageController-OSX */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8ABE7BD116F32E280015FE1F /* Build configuration list for PBXNativeTarget "GBStorageController-OSX" */;
+			buildPhases = (
+				8ABE7BBB16F32E280015FE1F /* Sources */,
+				8ABE7BBC16F32E280015FE1F /* Frameworks */,
+				8ABE7BBD16F32E280015FE1F /* Headers */,
+				8ABE7BBE16F32E280015FE1F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "GBStorageController-OSX";
+			productName = "GBStorageController-OSX";
+			productReference = 8ABE7BC016F32E280015FE1F /* GBStorageController.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		8ABE7BFA16F335F40015FE1F /* GBStorageController-OSX-UnitTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8ABE7C0816F335F40015FE1F /* Build configuration list for PBXNativeTarget "GBStorageController-OSX-UnitTests" */;
+			buildPhases = (
+				8ABE7BF616F335F40015FE1F /* Sources */,
+				8ABE7BF716F335F40015FE1F /* Frameworks */,
+				8ABE7BF816F335F40015FE1F /* Resources */,
+				8ABE7BF916F335F40015FE1F /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				8ABE7C2016F336E40015FE1F /* PBXTargetDependency */,
+				8ABE7C1E16F336E00015FE1F /* PBXTargetDependency */,
+			);
+			name = "GBStorageController-OSX-UnitTests";
+			productName = "GBStorageController-OSXTests";
+			productReference = 8ABE7BFB16F335F40015FE1F /* GBStorageController-OSX-UnitTests.octest */;
 			productType = "com.apple.product-type.bundle";
 		};
 /* End PBXNativeTarget section */
@@ -275,8 +422,10 @@
 			);
 			projectRoot = "";
 			targets = (
-				8A1F347B166B7F0E00F24A5F /* GBStorageController */,
-				8A1F348C166B7F0E00F24A5F /* GBStorageControllerTests */,
+				8A1F347B166B7F0E00F24A5F /* GBStorageController-iOS */,
+				8A1F348C166B7F0E00F24A5F /* GBStorageController-iOS-UnitTests */,
+				8ABE7BBF16F32E280015FE1F /* GBStorageController-OSX */,
+				8ABE7BFA16F335F40015FE1F /* GBStorageController-OSX-UnitTests */,
 			);
 		};
 /* End PBXProject section */
@@ -314,10 +463,37 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		8ABE7BBE16F32E280015FE1F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8ABE7BF816F335F40015FE1F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
 		8A1F348B166B7F0E00F24A5F /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+		8ABE7BF916F335F40015FE1F /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -349,12 +525,28 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		8ABE7BBB16F32E280015FE1F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8ABE7BD416F32ECF0015FE1F /* GBStorageController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8ABE7BF616F335F40015FE1F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8ABE7C2316F338430015FE1F /* GBStorageControllerTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
 		8A1F3494166B7F0E00F24A5F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 8A1F347B166B7F0E00F24A5F /* GBStorageController */;
+			target = 8A1F347B166B7F0E00F24A5F /* GBStorageController-iOS */;
 			targetProxy = 8A1F3493166B7F0E00F24A5F /* PBXContainerItemProxy */;
 		};
 		8A1F34B9166B7F8200F24A5F /* PBXTargetDependency */ = {
@@ -366,6 +558,16 @@
 			isa = PBXTargetDependency;
 			name = GBToolbox;
 			targetProxy = 8A814B4C166B839C0097E115 /* PBXContainerItemProxy */;
+		};
+		8ABE7C1E16F336E00015FE1F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "GBToolbox-OSX";
+			targetProxy = 8ABE7C1D16F336E00015FE1F /* PBXContainerItemProxy */;
+		};
+		8ABE7C2016F336E40015FE1F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8ABE7BBF16F32E280015FE1F /* GBStorageController-OSX */;
+			targetProxy = 8ABE7C1F16F336E40015FE1F /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -437,9 +639,9 @@
 			buildSettings = {
 				DSTROOT = /tmp/GBStorageController.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "GBStorageController/GBStorageController-Prefix.pch";
+				GCC_PREFIX_HEADER = "GBStorageController/GBStorageController-iOS-Prefix.pch";
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = GBStorageController;
 				SKIP_INSTALL = YES;
 			};
 			name = Debug;
@@ -449,9 +651,9 @@
 			buildSettings = {
 				DSTROOT = /tmp/GBStorageController.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "GBStorageController/GBStorageController-Prefix.pch";
+				GCC_PREFIX_HEADER = "GBStorageController/GBStorageController-iOS-Prefix.pch";
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = GBStorageController;
 				SKIP_INSTALL = YES;
 			};
 			name = Release;
@@ -464,7 +666,7 @@
 					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "GBStorageController/GBStorageController-Prefix.pch";
+				GCC_PREFIX_HEADER = "GBStorageController/GBStorageController-iOS-Prefix.pch";
 				INFOPLIST_FILE = "GBStorageControllerTests/GBStorageControllerTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = octest;
@@ -479,9 +681,105 @@
 					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "GBStorageController/GBStorageController-Prefix.pch";
+				GCC_PREFIX_HEADER = "GBStorageController/GBStorageController-iOS-Prefix.pch";
 				INFOPLIST_FILE = "GBStorageControllerTests/GBStorageControllerTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+		8ABE7BD216F32E280015FE1F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/Library/Frameworks\"",
+				);
+				FRAMEWORK_VERSION = A;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "GBStorageController/GBStorageController-OSX-Prefix.pch";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				PRODUCT_NAME = GBStorageController;
+				SDKROOT = macosx;
+				WRAPPER_EXTENSION = framework;
+			};
+			name = Debug;
+		};
+		8ABE7BD316F32E280015FE1F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/Library/Frameworks\"",
+				);
+				FRAMEWORK_VERSION = A;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "GBStorageController/GBStorageController-OSX-Prefix.pch";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				PRODUCT_NAME = GBStorageController;
+				SDKROOT = macosx;
+				WRAPPER_EXTENSION = framework;
+			};
+			name = Release;
+		};
+		8ABE7C0916F335F40015FE1F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = "\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"";
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "GBStorageController/GBStorageController-OSX-Prefix.pch";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				INFOPLIST_FILE = "GBStorageControllerTests/GBStorageControllerTests-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		8ABE7C0A16F335F40015FE1F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = "\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"";
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "GBStorageController/GBStorageController-OSX-Prefix.pch";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				INFOPLIST_FILE = "GBStorageControllerTests/GBStorageControllerTests-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
 				WRAPPER_EXTENSION = octest;
 			};
 			name = Release;
@@ -498,7 +796,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		8A1F34A1166B7F0E00F24A5F /* Build configuration list for PBXNativeTarget "GBStorageController" */ = {
+		8A1F34A1166B7F0E00F24A5F /* Build configuration list for PBXNativeTarget "GBStorageController-iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8A1F34A2166B7F0E00F24A5F /* Debug */,
@@ -507,7 +805,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		8A1F34A4166B7F0E00F24A5F /* Build configuration list for PBXNativeTarget "GBStorageControllerTests" */ = {
+		8A1F34A4166B7F0E00F24A5F /* Build configuration list for PBXNativeTarget "GBStorageController-iOS-UnitTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8A1F34A5166B7F0E00F24A5F /* Debug */,
@@ -515,6 +813,23 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		8ABE7BD116F32E280015FE1F /* Build configuration list for PBXNativeTarget "GBStorageController-OSX" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8ABE7BD216F32E280015FE1F /* Debug */,
+				8ABE7BD316F32E280015FE1F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8ABE7C0816F335F40015FE1F /* Build configuration list for PBXNativeTarget "GBStorageController-OSX-UnitTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8ABE7C0916F335F40015FE1F /* Debug */,
+				8ABE7C0A16F335F40015FE1F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};

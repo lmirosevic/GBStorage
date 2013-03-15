@@ -9,7 +9,12 @@
 #import "GBStorageControllerTests.h"
 
 #import "GBStorageController.h"
-#import "GBToolbox.h"
+
+#if TARGET_OS_IPHONE
+    #import "GBToolbox.h"
+#else
+    #import <GBToolbox/GBToolbox.h>
+#endif
 
 @implementation GBStorageControllerTests
 
@@ -30,11 +35,13 @@
 
 - (void)testLibrary
 {
+    [_sc deletePermanently:@"dogs"];
+    
     STAssertNil(_sc[@"dogs"], @"");
     
     _sc[@"dogs"] = [@[@"GSD", @"collie"] mutableCopy];
     
-    STAssertEquals(2u, ((NSArray *)_sc[@"dogs"]).count, @"");
+    STAssertEquals((NSUInteger)2, ((NSArray *)_sc[@"dogs"]).count, @"");
     STAssertEqualObjects(@"collie", _sc[@"dogs"][1], @"");
     
     [_sc[@"dogs"] addObject:@"pug"];

@@ -1,6 +1,6 @@
 //
 //  GBStorageController.m
-//  Xmas List
+//  GBStorageController
 //
 //  Created by Luka Mirosevic on 29/11/2012.
 //  Copyright (c) 2012 Goonbee. All rights reserved.
@@ -19,7 +19,11 @@
 
 #import "GBStorageController.h"
 
-#import "GBToolbox.h"
+#if TARGET_OS_IPHONE
+    #import "GBToolbox.h"
+#else
+    #import <GBToolbox/GBToolbox.h>
+#endif
 
 static NSUInteger const kStorageFileVersion = 1;
 
@@ -137,8 +141,13 @@ _lazy(NSMutableDictionary, cache, _cache)
 
 -(NSString *)_dbSavePathForKey:(NSString *)key {
 	//get the path for purchases file
+#if TARGET_OS_IPHONE
     NSString *documentsDirectoryPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-    NSString *path = [documentsDirectoryPath stringByAppendingPathComponent:[NSString stringWithFormat:@"gb-storage-controller-file-%@-%d", key, kStorageFileVersion]];
+#else
+    NSString *documentsDirectoryPath = [NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES) lastObject];
+#endif
+    
+    NSString *path = [documentsDirectoryPath stringByAppendingPathComponent:[NSString stringWithFormat:@"gb-storage-controller-file-%@-%ld", key, (unsigned long)kStorageFileVersion]];
     
 	return path;
 }

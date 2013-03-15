@@ -1,6 +1,6 @@
 //
 //  GBStorageController.h
-//  Xmas List
+//  GBStorageController
 //
 //  Created by Luka Mirosevic on 29/11/2012.
 //  Copyright (c) 2012 Goonbee. All rights reserved.
@@ -16,8 +16,6 @@
 //  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
-
-#import <Foundation/Foundation.h>
 
 @interface GBStorageController : NSObject
 
