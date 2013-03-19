@@ -31,6 +31,7 @@
 		8ABE7C2116F336EF0015FE1F /* GBToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8ABE7BBA16F32DEC0015FE1F /* GBToolbox.framework */; };
 		8ABE7C2216F336F20015FE1F /* GBStorageController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8ABE7BC016F32E280015FE1F /* GBStorageController.framework */; };
 		8ABE7C2316F338430015FE1F /* GBStorageControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A1F349D166B7F0E00F24A5F /* GBStorageControllerTests.m */; };
+		8AC8C3D516F8A95E005D1C92 /* GBToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8ABE7BBA16F32DEC0015FE1F /* GBToolbox.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -167,6 +168,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8AC8C3D516F8A95E005D1C92 /* GBToolbox.framework in Frameworks */,
 				8ABE7BC216F32E280015FE1F /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
