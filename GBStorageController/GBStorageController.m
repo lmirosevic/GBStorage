@@ -144,9 +144,23 @@ _lazy(NSMutableDictionary, cache, _cache)
 #if TARGET_OS_IPHONE
     NSString *documentsDirectoryPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
 #else
-    NSString *documentsDirectoryPath = [NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES) lastObject];
+    NSString *documentsDirectoryPath = [[NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:AppBundleIdentifier()];
 #endif
     
+    //make sure path exists
+    @try {
+        BOOL isDir;
+        if (![[NSFileManager defaultManager] fileExistsAtPath:documentsDirectoryPath isDirectory:&isDir] || !isDir) {
+            if (![[NSFileManager defaultManager] createDirectoryAtPath:documentsDirectoryPath withIntermediateDirectories:YES attributes:nil error:nil]) {
+                @throw [NSException exceptionWithName:@"GBStorageController" reason:@"file already exists in destination path" userInfo:nil];
+            }
+        }
+    }
+    @catch (NSException *exception) {
+        @throw [NSException exceptionWithName:@"GBStorageController error" reason:@"could not create directory" userInfo:nil];
+    }
+    
+    //construct path
     NSString *path = [documentsDirectoryPath stringByAppendingPathComponent:[NSString stringWithFormat:@"gb-storage-controller-file-%@-%ld", key, (unsigned long)kStorageFileVersion]];
     
 	return path;
@@ -179,7 +193,7 @@ _lazy(NSMutableDictionary, cache, _cache)
     @catch (NSException *exception) {
         @throw [NSException exceptionWithName:@"GBStorageController error" reason:@"something went wrong with loading db from disk" userInfo:nil];
     }
-    
+
     //return object, may be nil
     return object;
 }
