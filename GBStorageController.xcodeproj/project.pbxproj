@@ -126,6 +126,7 @@
 		8A1F349C166B7F0E00F24A5F /* GBStorageControllerTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GBStorageControllerTests.h; sourceTree = "<group>"; };
 		8A1F349D166B7F0E00F24A5F /* GBStorageControllerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GBStorageControllerTests.m; sourceTree = "<group>"; };
 		8A1F34A8166B7F7200F24A5F /* GBToolbox.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GBToolbox.xcodeproj; path = ../../GBToolbox/GBToolbox.xcodeproj; sourceTree = "<group>"; };
+		8A521B401701CFC600A89BE4 /* GBStorageController-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GBStorageController-Info.plist"; sourceTree = "<group>"; };
 		8A814B50166B851A0097E115 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		8ABE7BC016F32E280015FE1F /* GBStorageController.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GBStorageController.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8ABE7BC116F32E280015FE1F /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
@@ -235,6 +236,7 @@
 		8A1F3482166B7F0E00F24A5F /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				8A521B401701CFC600A89BE4 /* GBStorageController-Info.plist */,
 				8A1F3483166B7F0E00F24A5F /* GBStorageController-iOS-Prefix.pch */,
 				8ABE7BD616F32F4C0015FE1F /* GBStorageController-OSX-Prefix.pch */,
 			);
@@ -724,6 +726,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GBStorageController/GBStorageController-OSX-Prefix.pch";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				INFOPLIST_FILE = "GBStorageController/GBStorageController-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PRODUCT_NAME = GBStorageController;
 				SDKROOT = macosx;
@@ -751,6 +754,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GBStorageController/GBStorageController-OSX-Prefix.pch";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				INFOPLIST_FILE = "GBStorageController/GBStorageController-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PRODUCT_NAME = GBStorageController;
 				SDKROOT = macosx;
