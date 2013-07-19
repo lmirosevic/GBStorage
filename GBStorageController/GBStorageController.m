@@ -61,13 +61,11 @@ _lazy(NSMutableDictionary, cache, _cache)
 }
 
 -(void)setObject:(id<NSCoding>)object forKeyedSubscript:(NSString *)key {
-    if (object && IsValidString(key)) {
-        //put it in the cache
-        self.cache[key] = object;
-    }
-    else {
-        @throw [NSException exceptionWithName:@"GBStorageController error" reason:@"key must be non-empty NSString, and object must also be non-nil" userInfo:nil];
-    }
+    if (!object) @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"kobject must also be non-nil" userInfo:nil];
+    if (!IsValidString(key)) @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"key must be non-empty NSString" userInfo:nil];
+
+    //put it in the cache
+    self.cache[key] = object;
 }
 
 #pragma mark - advanced uses
