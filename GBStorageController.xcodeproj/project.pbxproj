@@ -119,7 +119,7 @@
 		8A1F3483166B7F0E00F24A5F /* GBStorageController-iOS-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GBStorageController-iOS-Prefix.pch"; sourceTree = "<group>"; };
 		8A1F3484166B7F0E00F24A5F /* GBStorageController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GBStorageController.h; sourceTree = "<group>"; };
 		8A1F3486166B7F0E00F24A5F /* GBStorageController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GBStorageController.m; sourceTree = "<group>"; };
-		8A1F348D166B7F0E00F24A5F /* GBStorageControllerTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = GBStorageControllerTests.octest; path = "GBStorageController-iOS-UnitTests.octest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8A1F348D166B7F0E00F24A5F /* GBStorageController-iOS-UnitTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "GBStorageController-iOS-UnitTests.octest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8A1F3490166B7F0E00F24A5F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		8A1F3498166B7F0E00F24A5F /* GBStorageControllerTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GBStorageControllerTests-Info.plist"; sourceTree = "<group>"; };
 		8A1F349A166B7F0E00F24A5F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -206,7 +206,7 @@
 			isa = PBXGroup;
 			children = (
 				8A1F347C166B7F0E00F24A5F /* libGBStorageController.a */,
-				8A1F348D166B7F0E00F24A5F /* GBStorageControllerTests.octest */,
+				8A1F348D166B7F0E00F24A5F /* GBStorageController-iOS-UnitTests.octest */,
 				8ABE7BC016F32E280015FE1F /* GBStorageController.framework */,
 				8ABE7BFB16F335F40015FE1F /* GBStorageController-OSX-UnitTests.octest */,
 			);
@@ -365,7 +365,7 @@
 			);
 			name = "GBStorageController-iOS-UnitTests";
 			productName = GBStorageControllerTests;
-			productReference = 8A1F348D166B7F0E00F24A5F /* GBStorageControllerTests.octest */;
+			productReference = 8A1F348D166B7F0E00F24A5F /* GBStorageController-iOS-UnitTests.octest */;
 			productType = "com.apple.product-type.bundle";
 		};
 		8ABE7BBF16F32E280015FE1F /* GBStorageController-OSX */ = {
@@ -453,7 +453,7 @@
 		8A1F34B3166B7F7200F24A5F /* GBToolboxUnitTests.octest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
-			path = GBToolboxUnitTests.octest;
+			path = "GBToolboxUnitTests-iOS.octest";
 			remoteRef = 8A1F34B2166B7F7200F24A5F /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
