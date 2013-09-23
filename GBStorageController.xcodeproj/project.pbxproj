@@ -267,7 +267,7 @@
 			isa = PBXGroup;
 			children = (
 				8A1F34B1166B7F7200F24A5F /* libGBToolbox.a */,
-				8A1F34B3166B7F7200F24A5F /* GBToolboxUnitTests.octest */,
+				8A1F34B3166B7F7200F24A5F /* GBToolboxUnitTests-iOS.octest */,
 				8ABE7BBA16F32DEC0015FE1F /* GBToolbox.framework */,
 			);
 			name = Products;
@@ -413,7 +413,7 @@
 		8A1F3473166B7F0E00F24A5F /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0450;
+				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = Goonbee;
 			};
 			buildConfigurationList = 8A1F3476166B7F0E00F24A5F /* Build configuration list for PBXProject "GBStorageController" */;
@@ -450,7 +450,7 @@
 			remoteRef = 8A1F34B0166B7F7200F24A5F /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		8A1F34B3166B7F7200F24A5F /* GBToolboxUnitTests.octest */ = {
+		8A1F34B3166B7F7200F24A5F /* GBToolboxUnitTests-iOS.octest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = "GBToolboxUnitTests-iOS.octest";
@@ -712,7 +712,6 @@
 		8ABE7BD216F32E280015FE1F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
@@ -740,7 +739,6 @@
 		8ABE7BD316F32E280015FE1F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
@@ -769,7 +767,6 @@
 		8ABE7C0916F335F40015FE1F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
@@ -790,7 +787,6 @@
 		8ABE7C0A16F335F40015FE1F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
