@@ -25,7 +25,7 @@
     #import <GBToolbox/GBToolbox.h>
 #endif
 
-static NSUInteger const kStorageFileVersion = 1;
+static NSUInteger const kGBStorageFileVersion = 2;
 
 @interface GBStorageController ()
 
@@ -55,15 +55,14 @@ _lazy(NSMutableDictionary, cache, _cache)
         return self.cache[key];
     }
     else {
-        @throw [NSException exceptionWithName:@"GBStorageController error" reason:@"key must be non-empty NSString" userInfo:nil];
-        return nil;
+        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"GBStorageController: key must be non-empty NSString" userInfo:nil];
     }
 }
 
 -(void)setObject:(id<NSCoding>)object forKeyedSubscript:(NSString *)key {
     if (!object) @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"kobject must also be non-nil" userInfo:nil];
     if (!IsValidString(key)) @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"key must be non-empty NSString" userInfo:nil];
-
+    
     //put it in the cache
     self.cache[key] = object;
 }
@@ -87,7 +86,7 @@ _lazy(NSMutableDictionary, cache, _cache)
         }
     }
     else {
-        @throw [NSException exceptionWithName:@"GBStorageController error" reason:@"key must be non-empty NSString, and object must be in cache" userInfo:nil];
+        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"GBStorageController: key must be non-empty NSString, and object must be in cache" userInfo:nil];
     }
 }
 
@@ -102,7 +101,7 @@ _lazy(NSMutableDictionary, cache, _cache)
         }
     }
     else {
-        @throw [NSException exceptionWithName:@"GBStorageController error" reason:@"key must be non-empty NSString" userInfo:nil];
+        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"GBStorageController: key must be non-empty NSString" userInfo:nil];
     }
 }
 
@@ -117,7 +116,7 @@ _lazy(NSMutableDictionary, cache, _cache)
         [self.cache removeObjectForKey:key];
     }
     else {
-        @throw [NSException exceptionWithName:@"GBStorageController error" reason:@"key must be non-empty NSString" userInfo:nil];
+        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"GBStorageController: key must be non-empty NSString" userInfo:nil];
     }
     
 }
@@ -131,14 +130,30 @@ _lazy(NSMutableDictionary, cache, _cache)
         [self _deleteObjectFromDiskForKey:key];
     }
     else {
-        @throw [NSException exceptionWithName:@"GBStorageController error" reason:@"key must be non-empty NSString" userInfo:nil];
+        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"GBStorageController: key must be non-empty NSString" userInfo:nil];
+    }
+}
+
+#pragma mark - storage upgrading
+
+-(void)_ensureFileIsLatestVersionForKey:(NSString *)key {
+    [self _upgradeFileForKeyFrom1to2:key];
+}
+
+-(void)_upgradeFileForKeyFrom1to2:(NSString *)key {
+    //check if it exists under version 1
+    BOOL isDir;
+    if ([[NSFileManager defaultManager] fileExistsAtPath:[self _dbSavePathForKey:key version:1] isDirectory:&isDir] && !isDir) {
+        //rename it to version 2
+        NSError *error;
+        [[NSFileManager defaultManager] moveItemAtPath:[self _dbSavePathForKey:key version:1] toPath:[self _dbSavePathForKey:key version:2] error:&error];
     }
 }
 
 #pragma mark - disk stuff
 
--(NSString *)_dbSavePathForKey:(NSString *)key {
-	//get the path for purchases file
+-(NSString *)_dbSaveDirectory {
+    //get the path for purchases file
 #if TARGET_OS_IPHONE
     NSString *documentsDirectoryPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
 #else
@@ -146,68 +161,70 @@ _lazy(NSMutableDictionary, cache, _cache)
 #endif
     
     //make sure path exists
-    @try {
-        BOOL isDir;
-        if (![[NSFileManager defaultManager] fileExistsAtPath:documentsDirectoryPath isDirectory:&isDir] || !isDir) {
-            if (![[NSFileManager defaultManager] createDirectoryAtPath:documentsDirectoryPath withIntermediateDirectories:YES attributes:nil error:nil]) {
-                @throw [NSException exceptionWithName:@"GBStorageController" reason:@"file already exists in destination path" userInfo:nil];
-            }
+    BOOL isDir;
+    if (![[NSFileManager defaultManager] fileExistsAtPath:documentsDirectoryPath isDirectory:&isDir] || !isDir) {
+        if (![[NSFileManager defaultManager] createDirectoryAtPath:documentsDirectoryPath withIntermediateDirectories:YES attributes:nil error:nil]) {
+            @throw [NSException exceptionWithName:NSInternalInconsistencyException reason:@"GBStorageController: file already exists in destination path" userInfo:nil];
         }
     }
-    @catch (NSException *exception) {
-        @throw [NSException exceptionWithName:@"GBStorageController error" reason:@"could not create directory" userInfo:nil];
-    }
+    
+    return documentsDirectoryPath;
+}
+
+//convenience that just returns it for the latest version
+-(NSString *)_dbSavePathForKey:(NSString *)key {
+    return [self _dbSavePathForKey:key version:kGBStorageFileVersion];
+}
+
+-(NSString *)_dbSavePathForKey:(NSString *)key version:(NSUInteger)version {
+    NSString *documentsDirectoryPath = [self _dbSaveDirectory];
     
     //construct path
-    NSString *path = [documentsDirectoryPath stringByAppendingPathComponent:[NSString stringWithFormat:@"gb-storage-controller-file-%@-%ld", key, (unsigned long)kStorageFileVersion]];
-    
-	return path;
+    switch (version) {
+        case 1: {
+            return [documentsDirectoryPath stringByAppendingPathComponent:[NSString stringWithFormat:@"gb-storage-controller-file-%@-%ld", key, (unsigned long)1]];
+        } break;
+            
+        case 2: {
+            return [documentsDirectoryPath stringByAppendingPathComponent:[NSString stringWithFormat:@"gb-storage-controller-file-%@-%ld", key.sha1, (unsigned long)2]];
+        } break;
+            
+        default: {
+            @throw [NSException exceptionWithName:NSInternalInconsistencyException reason:@"Tried to get save path for unkown file version" userInfo:@{@"fileVersion": @(version)}];
+        } break;
+    }
 }
 
 -(void)_saveObject:(id <NSCoding>)object toDiskForKey:(NSString *)key {
-    if (IsValidString(key)) {
-        //save to disk
-        @try {
-            [NSKeyedArchiver archiveRootObject:object toFile:[self _dbSavePathForKey:key]];
-        }
-        @catch (NSException *exception) {
-            @throw [NSException exceptionWithName:@"GBStorageController error" reason:@"something went wrong with archiving db to disk" userInfo:nil];
-        }
-    }
-    else {
-        @throw [NSException exceptionWithName:@"GBStorageController error" reason:@"key must be non-empty NSString" userInfo:nil];
-    }
+    //migrate file if needed
+    [self _ensureFileIsLatestVersionForKey:key];
+    
+    //save to disk
+    [NSKeyedArchiver archiveRootObject:object toFile:[self _dbSavePathForKey:key]];
 }
 
 -(id)_readObjectFromDiskForKey:(NSString *)key {
-    id object = nil;
+    //migrate file if needed
+    [self _ensureFileIsLatestVersionForKey:key];
     
-    @try {
-        if ([[NSFileManager defaultManager] fileExistsAtPath:[self _dbSavePathForKey:key]]) {
-            //load database if the file exists
-            object = [NSKeyedUnarchiver unarchiveObjectWithFile:[self _dbSavePathForKey:key]];
-        }
+    if ([[NSFileManager defaultManager] fileExistsAtPath:[self _dbSavePathForKey:key]]) {
+        //load database if the file exists
+        return [NSKeyedUnarchiver unarchiveObjectWithFile:[self _dbSavePathForKey:key]];
     }
-    @catch (NSException *exception) {
-        @throw [NSException exceptionWithName:@"GBStorageController error" reason:@"something went wrong with loading db from disk" userInfo:nil];
+    else {
+        return nil;
     }
-
-    //return object, may be nil
-    return object;
 }
 
 -(void)_deleteObjectFromDiskForKey:(NSString *)key {
-    NSError *error;
+    //migrate file if needed
+    [self _ensureFileIsLatestVersionForKey:key];
     
-    @try {
-        //check that it exists
-        if ([[NSFileManager defaultManager] fileExistsAtPath:[self _dbSavePathForKey:key]]) {
-            //delete it
-            [[NSFileManager defaultManager] removeItemAtPath:[self _dbSavePathForKey:key] error:&error];
-        }
-    }
-    @catch (NSException *exception) {
-        @throw [NSException exceptionWithName:@"GBStorageController error" reason:@"something went wrong with deleting db to disk" userInfo:nil];
+    //check that it exists
+    if ([[NSFileManager defaultManager] fileExistsAtPath:[self _dbSavePathForKey:key]]) {
+        //delete it
+        NSError *error;
+        [[NSFileManager defaultManager] removeItemAtPath:[self _dbSavePathForKey:key] error:&error];
     }
 }
 
