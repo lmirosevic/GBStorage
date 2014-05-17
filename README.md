@@ -1,5 +1,4 @@
-GBStorageController
-============
+# GBStorageController ![Version](https://img.shields.io/cocoapods/v/GBStorageController.svg?style=flat)&nbsp;![License](https://img.shields.io/badge/license-Apache_2-green.svg?style=flat)
 
 Simple iOS and Mac OS X persistence layer with in memory caching and preloading.
 
