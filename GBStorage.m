@@ -22,9 +22,7 @@
 #import <CommonCrypto/CommonDigest.h>
 
 NSString * const kGBStorageDefaultNamespace =                   nil;// NEVER change this!
-
 NSUInteger const kGBStorageMemoryCapUnlimited =                 0;
-
 
 static NSUInteger const kStorageFileVersion =                   2;
 static NSString * const kDocumentsDirectorySubfolder =          @"GBStorage"; // NEVER change this!
