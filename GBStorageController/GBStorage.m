@@ -1,6 +1,6 @@
 //
-//  GBStorageController.m
-//  GBStorageController
+//  GBStorage.m
+//  GBStorage
 //
 //  Created by Luka Mirosevic on 29/11/2012.
 //  Copyright (c) 2014 Goonbee. All rights reserved.
