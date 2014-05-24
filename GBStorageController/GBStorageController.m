@@ -24,8 +24,8 @@
 NSString * const kGBStorageDefaultNamespace =                   nil;// NEVER change this!
 
 static NSUInteger const kStorageFileVersion =                   2;
-static NSString * const kDefaultNameSpaceInstanceName =         @"defaultInstance";
-static NSString * const kDocumentsDirectorySubfolder =          @"GBStorage";
+static NSString * const kDocumentsDirectorySubfolder =          @"GBStorage"; // NEVER change this!
+static NSString * const kFilenamePrefix =                       @"gb-storage-controller-file";// NEVER change this!
 
 @interface GBStorageController ()
 
@@ -37,6 +37,7 @@ static NSString * const kDocumentsDirectorySubfolder =          @"GBStorage";
 @implementation GBStorageController
 
 #pragma mark - Memory
+//lm clearing should only delete files with the correct prefix
 
 -(id)initWithNamespace:(NSString *)storageNamespace {
     if (self = [super init]) {
@@ -44,7 +45,7 @@ static NSString * const kDocumentsDirectorySubfolder =          @"GBStorage";
         _storageNamespace = storageNamespace;
         
         // generate the hashed storage path, or just set it to the const if there is no namespace. There can be no collisions as the kDefaultNameSpaceInstanceName is defined to lie outside of space of potential sha1 digests. This will be used for storing to disk
-        _namespacedStoragePath = (storageNamespace == nil) ? kDefaultNameSpaceInstanceName : [self.class _sha1DigestForString:storageNamespace];
+        _namespacedStoragePath = (storageNamespace == nil) ? nil : [self.class _sha1DigestForString:storageNamespace];
 
         _cache = [NSMutableDictionary new];
     }
@@ -286,13 +287,14 @@ static NSMutableDictionary *_instances;
         case 1: {
             // version 1 files were stored plainly in the directory
             NSString *directory = [self _documentsDirectoryPath];
-            return [directory stringByAppendingPathComponent:[NSString stringWithFormat:@"gb-storage-controller-file-%@-%ld", key, (unsigned long)1]];
+            return [directory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@-%@-%ld", kFilenamePrefix, key, (unsigned long)1]];
         } break;
             
         case 2: {
             // version 2 files are stored plainly in the directory when not using a namespace, and in some subfolder when using a namespace. _diskCacheDirectory handles this
             NSString *directory = [self _diskCacheDirectory];
-            NSString *d = [directory stringByAppendingPathComponent:[NSString stringWithFormat:@"gb-storage-controller-file-%@-%ld", [self.class _sha1DigestForString:key], (unsigned long)2]];
+            NSString *d = [directory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@-%@-%ld", kFilenamePrefix, [self.class _sha1DigestForString:key], (unsigned long)2]];
+//            NSLog(d);
             return d;
         } break;
             
