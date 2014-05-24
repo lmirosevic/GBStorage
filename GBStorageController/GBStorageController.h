@@ -3,7 +3,7 @@
 //  GBStorageController
 //
 //  Created by Luka Mirosevic on 29/11/2012.
-//  Copyright (c) 2012 Goonbee. All rights reserved.
+//  Copyright (c) 2014 Goonbee. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -17,35 +17,72 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
+extern NSString * const kGBStorageDefaultNamespace;
+
 @interface GBStorageController : NSObject
 
-//Convenience
-#define GBStorage ([GBStorageController sharedController])
-#define _sc ([GBStorageController sharedController])
+/**
+ Shorthand for +[GBStorageController sharedControllerForNameSpace:] so callers can use the parens syntax, e.g. `GBStorage(@"some.namespace")[@"myObject"]`.
+ 
+ Pass kGBStorageDefaultNamespace or nil if you don't want to use a namespace, or for backwards compatibility with GBStorage 1.x.x
+ */
+GBStorageController *GBStorage(NSString *storageNamespace);
 
-//singleton
-+(GBStorageController *)sharedController;
+/**
+ Returns a namespaced singleton instance of GBStorageController. The same resource key can refer to different resources across different namespaces. Aggregate operations like saveAll and removeAllPermanently do not cross namespace boundaries.
+ 
+  Pass kGBStorageDefaultNamespace or nil if you don't want to use a namespace, or for backwards compatibility with GBStorage 1.x.x
+ */
++(instancetype)sharedControllerForNameSpace:(NSString *)storageNamespace;
 
-//keyed indexing
+/**
+ Fetches an object from the cache. Tries memory first, then disk. If no object found for the key, returns nil.
+ */
 -(id)objectForKeyedSubscript:(NSString *)key;
+
+/**
+ Stores an object into the in memory cache. To persist the object to disk so it's available on subsequent app launches, call -[GBStorageController save:].
+ */
 -(void)setObject:(id<NSCoding>)object forKeyedSubscript:(NSString *)key;
 
-//save all objects. see below ref rewriting
--(void)save;
-
-//save the object with key key. doesnt do any dirty checking, i.e. rewrites entire object to disk each time
+/**
+ Save the resource to disk. Doesn't do any dirty checking, i.e. rewrites the entire object to disk each time.
+ */
 -(void)save:(NSString *)key;
 
-//preload that object into the cache
--(void)preLoad:(NSString *)key;
+/**
+ Save all resources to disk. Doesn't do any dirty checking, i.e. rewrites the entire object to disk each time.
+ */
+-(void)saveAll;
 
-//clear all objects out of the cache
--(void)clearCache;
+/**
+ Preloads that resource into memory, if it isn't already there.
+ */
+-(void)preloadIntoMemory:(NSString *)key;
 
-//clear cache for a single key
--(void)clearCacheForKey:(NSString *)key;
+/**
+ Removes a particular resource from the in-memory cache.
+ */
+-(void)removeFromMemory:(NSString *)key;
 
-//delete data for that key from disk and cache
--(void)deletePermanently:(NSString *)key;
+/**
+ Removes all resources stored in the in-memory cache.
+ */
+-(void)removeAllFromMemory;
+
+/**
+ Deletes the resource for the key.
+ */
+-(void)removePermanently:(NSString *)key;
+
+/**
+ Deletes all the data stored on disk and from memory.
+ */
+-(void)removeAllPermanently;
+
+/**
+ Returns the namespace of this storage controller
+ */
+@property (strong, nonatomic, readonly) NSString *storageNamespace;
 
 @end
