@@ -6,14 +6,12 @@ Usage
 ------------
 
 Storing:
-
 ```objective-c
 GBStorageSimple[@"name"] = @"Luka";					// Caches object into memory only
 [GBStorageSimple saveAll];							// Persistent in memory objects to disk
 ```
 
 Reading:
-
 ```objective-c
 GBStorageSimple[@"name"];							// Returns "Luka", checks the in-memory cache first, then the disk cache. If not found returns nil
 ```
@@ -37,6 +35,12 @@ Clear cache:
 Deleting:
 ```objective-c
 [GBStorageSimple removePermanently:@"bigObject"];	// Removes object from both the in-memory and on-disk cache
+```
+
+If you want to use GBStorage as a persistent cache with a max memory usage cap:
+```objective-c
+GBStorageSimple.maxInMemoryCacheCapacity = 1000000; // set the max in-memory cache capacity to 1MB
+[GBStorageSimple setObject:@"someObject" forKey:@"key" withSize:100]; // insert an object into the cache with a known size
 ```
 
 Don't forget to import header:
