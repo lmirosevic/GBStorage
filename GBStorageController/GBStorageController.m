@@ -56,7 +56,7 @@ static NSString * const kFilenamePrefix =                       @"gb-storage-con
 #pragma mark - API
 
 GBStorageController *GBStorage(NSString *storageNamespace) {
-    return [GBStorageController sharedControllerForNameSpace:storageNamespace];
+    return [GBStorageController sharedControllerForNamespace:storageNamespace];
 }
 
 static NSMutableDictionary *_instances;
@@ -68,7 +68,7 @@ static NSMutableDictionary *_instances;
     }
 }
 
-+(instancetype)sharedControllerForNameSpace:(NSString *)storageNamespace {
++(instancetype)sharedControllerForNamespace:(NSString *)storageNamespace {
     static GBStorageController *_defaultInstance;
     @synchronized(self) {
         // verify that the namespace is legal, it can be nil or any non-empty string

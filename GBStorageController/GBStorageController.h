@@ -29,7 +29,7 @@ extern NSString * const kGBStorageDefaultNamespace;
 #define GBStorageSimple (GBStorage(nil))
 
 /**
- Shorthand for +[GBStorageController sharedControllerForNameSpace:] so callers can use the parens syntax, e.g. `GBStorage(@"some.namespace")[@"myObject"]`.
+ Shorthand for +[GBStorageController sharedControllerForNamespace:] so callers can use the parens syntax, e.g. `GBStorage(@"some.namespace")[@"myObject"]`.
  
  Pass kGBStorageDefaultNamespace or nil if you don't want to use a namespace, or for backwards compatibility with GBStorage 1.x.x
  */
@@ -40,7 +40,7 @@ GBStorageController *GBStorage(NSString *storageNamespace);
  
   Pass kGBStorageDefaultNamespace or nil if you don't want to use a namespace, or for backwards compatibility with GBStorage 1.x.x
  */
-+(instancetype)sharedControllerForNameSpace:(NSString *)storageNamespace;
++(instancetype)sharedControllerForNamespace:(NSString *)storageNamespace;
 
 /**
  Fetches an object from the cache. Tries memory first, then disk. If no object found for the key, returns nil.
