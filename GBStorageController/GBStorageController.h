@@ -22,6 +22,13 @@ extern NSString * const kGBStorageDefaultNamespace;
 @interface GBStorageController : NSObject
 
 /**
+ Shorthand for GBStorage(nil), i.e. to use GBStorage with no namespace.
+ 
+ This is a semantically equivalent replacement for the GBStorage macro from 1.x.x
+ */
+#define GBStorageSimple (GBStorage(nil))
+
+/**
  Shorthand for +[GBStorageController sharedControllerForNameSpace:] so callers can use the parens syntax, e.g. `GBStorage(@"some.namespace")[@"myObject"]`.
  
  Pass kGBStorageDefaultNamespace or nil if you don't want to use a namespace, or for backwards compatibility with GBStorage 1.x.x
