@@ -17,7 +17,7 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-#import "GBStorageController.h"
+#import "GBStorage.h"
 
 #import <CommonCrypto/CommonDigest.h>
 
@@ -37,7 +37,6 @@ static NSString * const kFilenamePrefix =                       @"gb-storage-con
 @implementation GBStorageController
 
 #pragma mark - Memory
-//lm clearing should only delete files with the correct prefix
 
 -(id)initWithNamespace:(NSString *)storageNamespace {
     if (self = [super init]) {
@@ -238,8 +237,11 @@ static NSMutableDictionary *_instances;
         
         BOOL isDir;
         if ([[NSFileManager defaultManager] fileExistsAtPath:filePath isDirectory:&isDir] || !isDir) {
-            if (![[NSFileManager defaultManager] removeItemAtPath:filePath error:nil]) {
-                @throw [NSException exceptionWithName:NSInternalInconsistencyException reason:@"Failed to delete file in cache directory" userInfo:nil];
+            // only remove it if it's a GBStorage file, which can be determined by the prefix
+            if ([fileName hasPrefix:kFilenamePrefix]) {
+                if (![[NSFileManager defaultManager] removeItemAtPath:filePath error:nil]) {
+                    @throw [NSException exceptionWithName:NSInternalInconsistencyException reason:@"Failed to delete file in cache directory" userInfo:nil];
+                }
             }
         }
     }
@@ -294,7 +296,6 @@ static NSMutableDictionary *_instances;
             // version 2 files are stored plainly in the directory when not using a namespace, and in some subfolder when using a namespace. _diskCacheDirectory handles this
             NSString *directory = [self _diskCacheDirectory];
             NSString *d = [directory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@-%@-%ld", kFilenamePrefix, [self.class _sha1DigestForString:key], (unsigned long)2]];
-//            NSLog(d);
             return d;
         } break;
             
