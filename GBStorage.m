@@ -183,7 +183,7 @@ static NSMutableDictionary *_instances;
     NSData *data = [string dataUsingEncoding:NSUTF8StringEncoding];
     uint8_t digest[CC_SHA1_DIGEST_LENGTH];
     
-    CC_SHA1(data.bytes, data.length, digest);
+    CC_SHA1(data.bytes, (CC_LONG)data.length, digest);
     
     NSMutableString *output = [NSMutableString stringWithCapacity:CC_SHA1_DIGEST_LENGTH * 2];
     
@@ -251,7 +251,7 @@ static NSMutableDictionary *_instances;
     #if TARGET_OS_IPHONE
         return [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
     #else
-        return [[NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:AppBundleIdentifier()];
+        return [[NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:[[NSBundle mainBundle] infoDictionary][@"CFBundleIdentifier"]];
     #endif
 }
 
@@ -300,7 +300,7 @@ static NSMutableDictionary *_instances;
         } break;
             
         default: {
-            @throw [NSException exceptionWithName:NSInternalInconsistencyException reason:[NSString stringWithFormat:@"Unimplemented storage version: %d", version] userInfo:nil];
+            @throw [NSException exceptionWithName:NSInternalInconsistencyException reason:[NSString stringWithFormat:@"Unimplemented storage version: %ld", (unsigned long)version] userInfo:nil];
         } break;
     }
 }
