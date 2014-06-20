@@ -31,9 +31,9 @@ static NSUInteger const kDefaultStorageMemoryCap =              kGBStorageMemory
 
 @interface GBStorageController ()
 
-@property (copy, nonatomic, readonly) NSString                  *namespacedStoragePath;
-@property (strong, nonatomic, readonly) NSMutableSet            *potentiallyCachedKeys;
-@property (strong, nonatomic, readonly) NSCache                 *cache;
+@property (copy, atomic, readonly) NSString                     *namespacedStoragePath;
+@property (strong, atomic, readonly) NSMutableSet               *potentiallyCachedKeys;
+@property (strong, atomic, readonly) NSCache                    *cache;
 
 @end
 
@@ -247,24 +247,31 @@ static NSMutableDictionary *_instances;
 
 #pragma mark - Util:Cache
 
-
 -(void)_removeAllObjectsFromCache {
-    [self.cache removeAllObjects];
-    [self.potentiallyCachedKeys removeAllObjects];
+    @synchronized(self) {
+        [self.cache removeAllObjects];
+        [self.potentiallyCachedKeys removeAllObjects];
+    }
 }
 
 -(void)_removeObjectFromCache:(NSString *)key {
-    [self.cache removeObjectForKey:key];
-    [self.potentiallyCachedKeys removeObject:key];
+    @synchronized(self) {
+        [self.cache removeObjectForKey:key];
+        [self.potentiallyCachedKeys removeObject:key];
+    }
 }
 
 -(void)_addObjectToCache:(id)object forKey:(NSString *)key cost:(NSUInteger)cost {
-    [self.cache setObject:object forKey:key cost:cost];
-    [self.potentiallyCachedKeys addObject:key];
+    @synchronized(self) {
+        [self.cache setObject:object forKey:key cost:cost];
+        [self.potentiallyCachedKeys addObject:key];
+    }
 }
 
 -(id)_objectFromCacheForKey:(NSString *)key {
-    return [self.cache objectForKey:key];
+    @synchronized(self) {
+        return [self.cache objectForKey:key];
+    }
 }
 
 #pragma mark - Util:Storage
