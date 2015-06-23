@@ -156,7 +156,7 @@ static NSMutableDictionary *_instances;
 -(void)saveAll {
     // call save for all keys in the cache
     NSMutableArray *evictedKeys = [NSMutableArray new];
-    for (NSString *key in self.potentiallyCachedKeys) {
+    for (NSString *key in [self.potentiallyCachedKeys copy]) {
         // save the object if it's in the cache
         if ([self _objectFromCacheForKey:key]) {
             [self save:key];
