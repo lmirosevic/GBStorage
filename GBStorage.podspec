@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = 'GBStorage'
-  s.version      = '2.2.0'
+  s.version      = '2.2.1'
   s.summary      = 'Simple iOS and Mac OS X persistence layer with in-memory caching, optional persistence, pre-loading, namespacing and a sweet syntax.'
   s.homepage     = 'https://github.com/lmirosevic/GBStorage'
   s.license      = 'Apache License, Version 2.0'
