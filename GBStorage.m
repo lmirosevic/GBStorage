@@ -401,7 +401,11 @@ static NSMutableDictionary *_instances;
         // check if the file exists
         if ([[NSFileManager defaultManager] fileExistsAtPath:[self _diskSavePathForKey:key]]) {
             // load it
-            return [NSKeyedUnarchiver unarchiveObjectWithFile:[self _diskSavePathForKey:key]];
+            @try {
+                return [NSKeyedUnarchiver unarchiveObjectWithFile:[self _diskSavePathForKey:key]];
+            } @catch (NSException *exception) {
+                return nil;
+            }
         }
         else {
             return nil;
