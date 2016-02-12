@@ -423,6 +423,10 @@ static NSMutableDictionary *_instances;
     @synchronized(self) {
         // two phase save strategy. First archive to temporary file and then move temporary file to desired save location
         if ([NSKeyedArchiver archiveRootObject:object toFile:tempPath]) {
+            // copyItemAtPath: doesn't overwrite files
+            if ([[NSFileManager defaultManager] fileExistsAtPath:savePath]) {
+                [[NSFileManager defaultManager] removeItemAtPath:savePath error:nil];
+            }
             [[NSFileManager defaultManager] copyItemAtPath:tempPath toPath:savePath error:nil];
         }
     }
