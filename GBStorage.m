@@ -418,16 +418,12 @@ static NSMutableDictionary *_instances;
     
     NSString *tempPath = [self _temporarySavePathForKey:key];
     NSString *savePath = [self _diskSavePathForKey:key];
-    
+
     // save to disk
     @synchronized(self) {
         // two phase save strategy. First archive to temporary file and then move temporary file to desired save location
         if ([NSKeyedArchiver archiveRootObject:object toFile:tempPath]) {
-            // copyItemAtPath: doesn't overwrite files
-            if ([[NSFileManager defaultManager] fileExistsAtPath:savePath]) {
-                [[NSFileManager defaultManager] removeItemAtPath:savePath error:nil];
-            }
-            [[NSFileManager defaultManager] copyItemAtPath:tempPath toPath:savePath error:nil];
+            [[NSFileManager defaultManager] replaceItemAtURL:[NSURL fileURLWithPath:savePath] withItemAtURL:[NSURL fileURLWithPath:tempPath] backupItemName:nil options:0 resultingItemURL:nil error:nil];
         }
     }
 }
@@ -457,11 +453,19 @@ static NSMutableDictionary *_instances;
         }
     };
     
-    // try to unarchive saved object
-    id savedObject = readObjectBlock([self _diskSavePathForKey:key]);
-    if (!savedObject) {
-        // if failed try to unarchive temporary object
-        savedObject = readObjectBlock([self _temporarySavePathForKey:key]);
+    NSString *tempPath = [self _temporarySavePathForKey:key];
+    NSString *savePath = [self _diskSavePathForKey:key];
+    
+    //  temp object is always the latest, try to unarchive temp object first
+    id savedObject = readObjectBlock(tempPath);
+    if (savedObject) {
+        // move it back to Documents
+        @synchronized(self) {
+            [[NSFileManager defaultManager] replaceItemAtURL:[NSURL fileURLWithPath:savePath] withItemAtURL:[NSURL fileURLWithPath:tempPath] backupItemName:nil options:0 resultingItemURL:nil error:nil];
+        }
+    } else {
+        // if failed then the latest object is in documents try to unarchive object
+        savedObject = readObjectBlock(savePath);
     }
     return savedObject;
 }
