@@ -305,17 +305,18 @@ static NSMutableDictionary *_instances;
 
 -(void)_clearCacheFolder {
     @synchronized(self) {
-        NSString *cacheDirectoryPath = [self _diskCacheDirectory];
-        for (NSString *fileName in [[NSFileManager defaultManager] contentsOfDirectoryAtPath:cacheDirectoryPath error:nil]) {
-
-            NSString *filePath = [cacheDirectoryPath stringByAppendingPathComponent:fileName];
-            
-            BOOL isDir;
-            if ([[NSFileManager defaultManager] fileExistsAtPath:filePath isDirectory:&isDir] || !isDir) {
-                // only remove it if it's a GBStorage file, which can be determined by the prefix
-                if ([fileName hasPrefix:kFilenamePrefix]) {
-                    if (![[NSFileManager defaultManager] removeItemAtPath:filePath error:nil]) {
-                        @throw [NSException exceptionWithName:NSInternalInconsistencyException reason:@"Failed to delete file in cache directory" userInfo:nil];
+        // cleanup disk cache and temporary directory paths
+        for (NSString *path in @[[self _diskCacheDirectory], [self _temporaryDirectory]]) {
+            for (NSString *fileName in [[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:nil]) {
+                NSString *filePath = [path stringByAppendingPathComponent:fileName];
+                
+                BOOL isDir;
+                if ([[NSFileManager defaultManager] fileExistsAtPath:filePath isDirectory:&isDir] || !isDir) {
+                    // only remove it if it's a GBStorage file, which can be determined by the prefix
+                    if ([fileName hasPrefix:kFilenamePrefix]) {
+                        if (![[NSFileManager defaultManager] removeItemAtPath:filePath error:nil]) {
+                            @throw [NSException exceptionWithName:NSInternalInconsistencyException reason:@"Failed to delete file in cache directory" userInfo:nil];
+                        }
                     }
                 }
             }
@@ -332,64 +333,98 @@ static NSMutableDictionary *_instances;
 }
 
 -(NSString *)_diskCacheDirectory {
-    NSString *documentsDirectoryPath = [self _documentsDirectoryPath];
-    
+    return [self _namespaceDirectorPathFromPath:[self _documentsDirectoryPath]];
+}
+
+-(NSString *)_temporaryDirectory {
+    return [self _namespaceDirectorPathFromPath:NSTemporaryDirectory()];
+}
+
+-(NSString *)_namespaceDirectorPathFromPath:(NSString *)path {
     // if we have a namespace, then use it
-    NSString *diskCacheDirectory;
+    NSString *namespaceDirectorPath;
     if (self.namespacedStoragePath == kGBStorageDefaultNamespace) {
-        diskCacheDirectory = documentsDirectoryPath;
+        namespaceDirectorPath = path;
     }
     else {
-        diskCacheDirectory = [[documentsDirectoryPath stringByAppendingPathComponent:kDocumentsDirectorySubfolder] stringByAppendingPathComponent:self.namespacedStoragePath];
+        namespaceDirectorPath = [[path stringByAppendingPathComponent:kDocumentsDirectorySubfolder] stringByAppendingPathComponent:self.namespacedStoragePath];
     }
     
     @synchronized(self) {
         // make sure path exists
         BOOL isDir;
-        if (![[NSFileManager defaultManager] fileExistsAtPath:diskCacheDirectory isDirectory:&isDir] || !isDir) {
+        if (![[NSFileManager defaultManager] fileExistsAtPath:namespaceDirectorPath isDirectory:&isDir] || !isDir) {
             // directory doesn't exist, so create it
-            if (![[NSFileManager defaultManager] createDirectoryAtPath:diskCacheDirectory withIntermediateDirectories:YES attributes:nil error:nil]) {
+            if (![[NSFileManager defaultManager] createDirectoryAtPath:namespaceDirectorPath withIntermediateDirectories:YES attributes:nil error:nil]) {
                 @throw [NSException exceptionWithName:NSInternalInconsistencyException reason:@"Failed to create storage directory" userInfo:nil];
             }
         }
     }
     
-    return diskCacheDirectory;
+    return namespaceDirectorPath;
 }
 
 -(NSString *)_diskSavePathForKey:(NSString *)key {
     return [self _diskSavePathForKey:key version:kStorageFileVersion];
 }
 
--(NSString *)_diskSavePathForKey:(NSString *)key version:(NSUInteger)version {
-    //construct path
+-(NSString *)_temporarySavePathForKey:(NSString *)key {
+    return [[self _temporaryDirectory] stringByAppendingPathComponent:[self _diskSaveFilenameForKey:key version:kStorageFileVersion]];
+}
+
+-(NSString *)_diskSaveFilenameForKey:(NSString *)key version:(NSUInteger)version {
+    //construct filename
     switch (version) {
         case 1: {
-            // version 1 files were stored plainly in the directory
-            NSString *directory = [self _documentsDirectoryPath];
-            return [directory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@-%@-%ld", kFilenamePrefix, key, (unsigned long)1]];
+            return [NSString stringWithFormat:@"%@-%@-%ld", kFilenamePrefix, key, (unsigned long)1];
         } break;
-            
+        
         case 2: {
-            // version 2 files are stored plainly in the directory when not using a namespace, and in some subfolder when using a namespace. _diskCacheDirectory handles this
-            NSString *directory = [self _diskCacheDirectory];
-            NSString *d = [directory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@-%@-%ld", kFilenamePrefix, [self.class _sha1DigestForString:key], (unsigned long)2]];
-            return d;
+            return [NSString stringWithFormat:@"%@-%@-%ld", kFilenamePrefix, [self.class _sha1DigestForString:key], (unsigned long)2];
         } break;
-            
+        
         default: {
             @throw [NSException exceptionWithName:NSInternalInconsistencyException reason:[NSString stringWithFormat:@"Unimplemented storage version: %ld", (unsigned long)version] userInfo:nil];
         } break;
     }
 }
 
+-(NSString *)_diskSavePathForKey:(NSString *)key version:(NSUInteger)version {
+    NSString *directory;
+    
+    //construct path
+    switch (version) {
+        case 1: {
+            // version 1 files were stored plainly in the directory
+            directory = [self _documentsDirectoryPath];
+        } break;
+        
+        case 2: {
+            // version 2 files are stored plainly in the directory when not using a namespace, and in some subfolder when using a namespace. _diskCacheDirectory handles this
+            directory = [self _diskCacheDirectory];
+        } break;
+        
+        default: {
+            @throw [NSException exceptionWithName:NSInternalInconsistencyException reason:[NSString stringWithFormat:@"Unimplemented storage version: %ld", (unsigned long)version] userInfo:nil];
+        } break;
+    }
+    
+    return [directory stringByAppendingPathComponent:[self _diskSaveFilenameForKey:key version:version]];
+}
+
 -(void)_saveObject:(id <NSCoding>)object toDiskForKey:(NSString *)key {
     // migrate file if needed
     [self _ensureFileIsLatestVersionForKey:key];
     
+    NSString *tempPath = [self _temporarySavePathForKey:key];
+    NSString *savePath = [self _diskSavePathForKey:key];
+
     // save to disk
     @synchronized(self) {
-        [NSKeyedArchiver archiveRootObject:object toFile:[self _diskSavePathForKey:key]];
+        // two phase save strategy. First archive to temporary file and then move temporary file to desired save location
+        if ([NSKeyedArchiver archiveRootObject:object toFile:tempPath]) {
+            [[NSFileManager defaultManager] replaceItemAtURL:[NSURL fileURLWithPath:savePath] withItemAtURL:[NSURL fileURLWithPath:tempPath] backupItemName:nil options:0 resultingItemURL:nil error:nil];
+        }
     }
 }
 
@@ -397,16 +432,42 @@ static NSMutableDictionary *_instances;
     // migrate file if needed
     [self _ensureFileIsLatestVersionForKey:key];
     
-    @synchronized(self) {
-        // check if the file exists
-        if ([[NSFileManager defaultManager] fileExistsAtPath:[self _diskSavePathForKey:key]]) {
-            // load it
-            return [NSKeyedUnarchiver unarchiveObjectWithFile:[self _diskSavePathForKey:key]];
+    // helper block which returns unarcived object from file if file exists and suppresses NSKeyedUnarchiver exceptions if file is currupred in Release
+    id(^readObjectBlock)(NSString *) = ^id(NSString *path) {
+        @synchronized(self) {
+            if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
+#ifdef DEBUG
+                return [NSKeyedUnarchiver unarchiveObjectWithFile:path];
+#else
+                @try {
+                    return [NSKeyedUnarchiver unarchiveObjectWithFile:path];
+                }
+                @catch (NSException *exception) {
+                    return nil;
+                }
+#endif
+            }
+            else {
+                return nil;
+            }
         }
-        else {
-            return nil;
+    };
+    
+    NSString *tempPath = [self _temporarySavePathForKey:key];
+    NSString *savePath = [self _diskSavePathForKey:key];
+    
+    //  temp object is always the latest, try to unarchive temp object first
+    id savedObject = readObjectBlock(tempPath);
+    if (savedObject) {
+        // move it back to Documents
+        @synchronized(self) {
+            [[NSFileManager defaultManager] replaceItemAtURL:[NSURL fileURLWithPath:savePath] withItemAtURL:[NSURL fileURLWithPath:tempPath] backupItemName:nil options:0 resultingItemURL:nil error:nil];
         }
+    } else {
+        // if failed then the latest object is in documents try to unarchive object
+        savedObject = readObjectBlock(savePath);
     }
+    return savedObject;
 }
 
 -(NSUInteger)_sizeForObjectOnDiskForKey:(NSString *)key {
@@ -420,10 +481,13 @@ static NSMutableDictionary *_instances;
     [self _ensureFileIsLatestVersionForKey:key];
     
     @synchronized(self) {
-        // check if the file exists
-        if ([[NSFileManager defaultManager] fileExistsAtPath:[self _diskSavePathForKey:key]]) {
-            // delete it
-            [[NSFileManager defaultManager] removeItemAtPath:[self _diskSavePathForKey:key] error:nil];
+        // cleanup disk cache and temporary file paths
+        for (NSString *path in @[[self _diskSavePathForKey:key], [self _temporarySavePathForKey:key]]) {
+            // check if the file exists
+            if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
+                // delete it
+                [[NSFileManager defaultManager] removeItemAtPath:path error:nil];
+            }
         }
     }
 }
