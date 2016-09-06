@@ -29,11 +29,13 @@ static NSString * const kDocumentsDirectorySubfolder =          @"GBStorage"; //
 static NSString * const kFilenamePrefix =                       @"gb-storage-controller-file";// NEVER change this!
 static NSUInteger const kDefaultStorageMemoryCap =              kGBStorageMemoryCapUnlimited;
 
-@interface GBStorageController ()
+@interface GBStorageController () <NSCacheDelegate>
 
 @property (copy, atomic, readonly) NSString                     *namespacedStoragePath;
 @property (strong, atomic, readonly) NSMutableSet               *potentiallyCachedKeys;
 @property (strong, atomic, readonly) NSCache                    *cache;
+
+@property (strong, atomic, readonly) NSMapTable                 *objectToKeyAssociationsTable;
 
 @end
 
@@ -51,7 +53,10 @@ static NSUInteger const kDefaultStorageMemoryCap =              kGBStorageMemory
 
         _cache = [NSCache new];
         _cache.totalCostLimit = kDefaultStorageMemoryCap;
+        _cache.delegate = self;
         _potentiallyCachedKeys = [NSMutableSet new];
+        
+        _objectToKeyAssociationsTable = [NSMapTable mapTableWithKeyOptions:(NSPointerFunctionsObjectPointerPersonality | NSPointerFunctionsWeakMemory) valueOptions:NSPointerFunctionsCopyIn];
     }
     
     return self;
@@ -253,6 +258,7 @@ static NSMutableDictionary *_instances;
 
 -(void)_addObjectToCache:(id)object forKey:(NSString *)key cost:(NSUInteger)cost {
     @synchronized(self) {
+        [self.objectToKeyAssociationsTable setObject:key forKey:object];
         [self.cache setObject:object forKey:key cost:cost];
         [self.potentiallyCachedKeys addObject:key];
     }
@@ -498,4 +504,15 @@ static NSMutableDictionary *_instances;
     // return the object--which is strongly retained here--immediately
     return object;
 }
+
+#pragma mark - Eviction
+
+- (void)cache:(NSCache *)cache willEvictObject:(id)obj {
+    // remove this key from the potentially cached keys
+    NSString *key = [self.objectToKeyAssociationsTable objectForKey:obj];
+    [self.potentiallyCachedKeys removeObject:key];
+    
+    NSLog(@"will evict: %@ -> %@", key, obj);
+}
+
 @end
