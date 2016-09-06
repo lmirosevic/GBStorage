@@ -75,6 +75,20 @@ GBStorageController * _Nonnull GBStorage(NSString * _Nonnull storageNamespace);
 @property (assign, nonatomic) NSUInteger maxInMemoryCacheCapacity; // default: kGBStorageMemoryCapUnlimited
 
 /**
+ Returns YES if the object for `key` is in the in-memory cache.
+ 
+ Objects can be removed from the cache at any time, so it is possible that calling `objectForKeyedSubscript:` immediately following a call to `isCached` will cause a cache miss.
+ */
+- (BOOL)isCached:(nonnull NSString *)key;
+
+/**
+ The set of keys for the objects which are still in the cache.
+ 
+ Objects can be removed from the cache at any time, so it is possible that calling `objectForKeyedSubscript:` immediately following a call to `cachedKeys` on one of its keys will cause a cache miss.
+ */
+@property (copy, nonatomic, nonnull) NSSet<NSString *> *cachedKeys;
+
+/**
  Save the resource to disk. Doesn't do any dirty checking, i.e. rewrites the entire object to disk each time.
  */
 - (void)save:(nonnull NSString *)key;

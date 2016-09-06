@@ -32,7 +32,7 @@ static NSUInteger const kDefaultStorageMemoryCap =                  kGBStorageMe
 @interface GBStorageController () <NSCacheDelegate>
 
 @property (copy, atomic, readonly) NSString                         *namespacedStoragePath;
-@property (strong, atomic, readonly) NSMutableSet<NSString *>       *potentiallyCachedKeys;
+@property (strong, atomic, readonly) NSMutableSet<NSString *>       *cachedKeysMutable;
 @property (strong, atomic, readonly) NSCache<NSString*, id>         *cache;
 
 @property (strong, atomic, readonly) NSMapTable<id, NSString *>     *objectToKeyAssociationsTable;
@@ -54,7 +54,7 @@ static NSUInteger const kDefaultStorageMemoryCap =                  kGBStorageMe
         _cache = [NSCache new];
         _cache.totalCostLimit = kDefaultStorageMemoryCap;
         _cache.delegate = self;
-        _potentiallyCachedKeys = [NSMutableSet new];
+        _cachedKeysMutable = [NSMutableSet new];
         
         _objectToKeyAssociationsTable = [NSMapTable mapTableWithKeyOptions:(NSPointerFunctionsObjectPointerPersonality | NSPointerFunctionsWeakMemory) valueOptions:NSPointerFunctionsCopyIn];
     }
@@ -148,6 +148,16 @@ static NSMutableDictionary *_instances;
     return self.cache.totalCostLimit;
 }
 
+- (BOOL)isCached:(nonnull NSString *)key {
+    [self.class _validateKey:key];
+    
+    return [self.cachedKeysMutable containsObject:key];
+}
+
+- (NSSet<NSString *> *)cachedKeys {
+    return [self.cachedKeysMutable copy];
+}
+
 - (void)save:(NSString *)key {
     [self.class _validateKey:key];
     
@@ -163,21 +173,8 @@ static NSMutableDictionary *_instances;
 
 - (void)saveAll {
     // call save for all keys in the cache
-    NSMutableArray *evictedKeys = [NSMutableArray new];
-    for (NSString *key in [self.potentiallyCachedKeys copy]) {
-        // save the object if it's in the cache
-        if ([self _objectFromCacheForKey:key]) {
-            [self save:key];
-        }
-        // otherwise mark it for cleanup from our internal keys bookkeeping list because it's been evicted
-        else {
-            [evictedKeys addObject:key];
-        }
-    }
-    
-    // clean up internal bookkeeping
-    for (NSString *key in evictedKeys) {
-        [self.potentiallyCachedKeys removeObject:key];
+    for (NSString *key in self.cachedKeysMutable) {
+        [self save:key];
     }
 }
 
@@ -245,14 +242,14 @@ static NSMutableDictionary *_instances;
 - (void)_removeAllObjectsFromCache {
     @synchronized(self) {
         [self.cache removeAllObjects];
-        [self.potentiallyCachedKeys removeAllObjects];
+        [self.cachedKeysMutable removeAllObjects];
     }
 }
 
 - (void)_removeObjectFromCache:(NSString *)key {
     @synchronized(self) {
         [self.cache removeObjectForKey:key];
-        [self.potentiallyCachedKeys removeObject:key];
+        [self.cachedKeysMutable removeObject:key];
     }
 }
 
@@ -260,7 +257,7 @@ static NSMutableDictionary *_instances;
     @synchronized(self) {
         [self.objectToKeyAssociationsTable setObject:key forKey:object];
         [self.cache setObject:object forKey:key cost:cost];
-        [self.potentiallyCachedKeys addObject:key];
+        [self.cachedKeysMutable addObject:key];
     }
 }
 
@@ -510,7 +507,7 @@ static NSMutableDictionary *_instances;
 - (void)cache:(NSCache *)cache willEvictObject:(id)obj {
     // remove this key from the potentially cached keys
     NSString *key = [self.objectToKeyAssociationsTable objectForKey:obj];
-    [self.potentiallyCachedKeys removeObject:key];
+    [self.cachedKeysMutable removeObject:key];
     
     // we jump to the main thread, firstly to guarantee that we are calling this on the main thread, and secondly to ensure that the code is executed outside of this frame as performing changes to the cache at this time is not supported by NSCache
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -518,7 +515,7 @@ static NSMutableDictionary *_instances;
         if ([self.delegate respondsToSelector:@selector(storage:didEvictObject:forKey:)]) {
             [self.delegate storage:self didEvictObject:obj forKey:key];
         }
-    });    
+    });
 }
 
 @end
