@@ -17,7 +17,7 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-extern NSString * const kGBStorageDefaultNamespace;
+extern NSString * _Nonnull const kGBStorageDefaultNamespace;
 extern NSUInteger const kGBStorageMemoryCapUnlimited;
 
 @interface GBStorageController : NSObject
@@ -34,33 +34,33 @@ extern NSUInteger const kGBStorageMemoryCapUnlimited;
  
  Pass kGBStorageDefaultNamespace or nil if you don't want to use a namespace, or for backwards compatibility with GBStorage 1.x.x
  */
-GBStorageController *GBStorage(NSString *storageNamespace);
+GBStorageController * _Nonnull GBStorage(NSString * _Nonnull storageNamespace);
 
 /**
  Returns a namespaced singleton instance of GBStorageController. The same resource key can refer to different resources across different namespaces. Aggregate operations like saveAll and removeAllPermanently do not cross namespace boundaries.
  
   Pass kGBStorageDefaultNamespace or nil if you don't want to use a namespace, or for backwards compatibility with GBStorage 1.x.x
  */
-+(instancetype)sharedControllerForNamespace:(NSString *)storageNamespace;
++ (nonnull instancetype)sharedControllerForNamespace:(nullable NSString *)storageNamespace;
 
 /**
  Fetches an object from the cache. Tries memory first, then disk. If no object found for the key, returns nil.
  */
--(id)objectForKeyedSubscript:(NSString *)key;
+- (nullable id)objectForKeyedSubscript:(nonnull NSString *)key;
 
 /**
  Stores an object into the in memory cache. To persist the object to disk so it's available on subsequent app launches, call `-[GBStorageController save:]`.
  */
--(void)setObject:(id<NSCoding>)object forKeyedSubscript:(NSString *)key;
+- (void)setObject:(nonnull id<NSCoding>)object forKeyedSubscript:(nonnull NSString *)key;
 
 /**
  Stores an object into the in memory cache, with a cost associated with it. It will evict objects according LRU-style once the memory capacity is exceeded.
  */
--(void)setObject:(id<NSCoding>)object forKey:(NSString *)key withSize:(NSUInteger)size;
+- (void)setObject:(nonnull id<NSCoding>)object forKey:(nonnull NSString *)key withSize:(NSUInteger)size;
 /**
  Stores an object into the in memory cache, with a cost associated with it. It will evict objects according LRU-style once the memory capacity is exceeded. If `shouldPersistImmediately` is set to YES, then the object is immediately saved. Use this for cases where you have set a memory cap but want to guarantee that objects will remain cached on disk.
  */
--(void)setObject:(id<NSCoding>)object forKey:(NSString *)key withSize:(NSUInteger)size persistImmediately:(BOOL)shouldPersistImmediately;
+- (void)setObject:(nonnull id<NSCoding>)object forKey:(nonnull NSString *)key withSize:(NSUInteger)size persistImmediately:(BOOL)shouldPersistImmediately;
 
 /**
  Lets you set a memory cap for how much the in-memory cache is allowed to use. In terms of cost, as defined by the cost parameter sent to `-[GBStorageController setObject:forKey:withCost:]`
@@ -70,41 +70,41 @@ GBStorageController *GBStorage(NSString *storageNamespace);
 /**
  Save the resource to disk. Doesn't do any dirty checking, i.e. rewrites the entire object to disk each time.
  */
--(void)save:(NSString *)key;
+- (void)save:(nonnull NSString *)key;
 
 /**
  Save all resources to disk. Doesn't do any dirty checking, i.e. rewrites the entire object to disk each time.
  */
--(void)saveAll;
+- (void)saveAll;
 
 /**
- Preloads that resource into memory, if it isn't already there.
+ Preloads that resource into memory, if it isn't already there. 
  */
--(void)preloadIntoMemory:(NSString *)key;
+- (void)preloadIntoMemory:(nonnull NSString *)key;
 
 /**
  Removes a particular resource from the in-memory cache.
  */
--(void)removeFromMemory:(NSString *)key;
+- (void)removeFromMemory:(nonnull NSString *)key;
 
 /**
  Removes all resources stored in the in-memory cache.
  */
--(void)removeAllFromMemory;
+- (void)removeAllFromMemory;
 
 /**
  Deletes the resource for the key.
  */
--(void)removePermanently:(NSString *)key;
+- (void)removePermanently:(nonnull NSString *)key;
 
 /**
  Deletes all the data stored on disk and from memory.
  */
--(void)removeAllPermanently;
+- (void)removeAllPermanently;
 
 /**
  Returns the namespace of this storage controller
  */
-@property (strong, nonatomic, readonly) NSString *storageNamespace;
+@property (strong, nonatomic, readonly, nullable) NSString *storageNamespace;
 
 @end
