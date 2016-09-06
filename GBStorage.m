@@ -101,14 +101,17 @@ static NSMutableDictionary *_instances;
 -(id)objectForKeyedSubscript:(NSString *)key {
     [self.class _validateKey:key];
     
-    // if not in cache...
-    if (![self _objectFromCacheForKey:key]) {
-        // load it into the cache
-        [self preloadIntoMemory:key];
+    // attempt to fetch from cache first
+    id object = [self _objectFromCacheForKey:key];
+    
+    // if not in cache
+    if (!object) {
+        // load it, and also store it into the cache
+        object = [self _loadFromDiskAndAddToCache:key];
     }
     
-    // then return whatever is in the cache now
-    return [self _objectFromCacheForKey:key];
+    // return the object
+    return object;
 }
 
 -(void)setObject:(id<NSCoding>)object forKeyedSubscript:(NSString *)key {
@@ -176,20 +179,7 @@ static NSMutableDictionary *_instances;
 -(void)preloadIntoMemory:(NSString *)key {
     [self.class _validateKey:key];
     
-    // only do it if it's not already loaded into memory
-    if (![self _objectFromCacheForKey:key]) {
-        // load it from disk
-        id object = [self _readObjectFromDiskForKey:key];
-        
-        // make sure an object on disk matches the key
-        if (object) {
-            // get its size
-            NSUInteger size = [self _sizeForObjectOnDiskForKey:key];
-            
-            // add it into the cache
-            [self _addObjectToCache:object forKey:key cost:size];
-        }
-    }
+    [self _loadFromDiskAndAddToCache:key];
 }
 
 -(void)removeFromMemory:(NSString *)key {
@@ -492,4 +482,20 @@ static NSMutableDictionary *_instances;
     }
 }
 
+- (id)_loadFromDiskAndAddToCache:(NSString *)key {
+    // attempt to load it from cache first
+    id object = [self _objectFromCacheForKey:key];
+    
+    // if we don't have it...
+    if (!object) {
+        // load it from disk
+        object = [self _readObjectFromDiskForKey:key];
+        
+        // cache it if it exists
+        if (object) [self _addObjectToCache:object forKey:key cost:[self _sizeForObjectOnDiskForKey:key]];
+    }
+    
+    // return the object--which is strongly retained here--immediately
+    return object;
+}
 @end
