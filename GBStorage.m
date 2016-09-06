@@ -69,7 +69,7 @@ GBStorageController *GBStorage(NSString *storageNamespace) {
 }
 
 static NSMutableDictionary *_instances;
-+(void)initialize {
++ (void)initialize {
     static BOOL initialised = NO;
     if (!initialised) {
         initialised = YES;
@@ -77,7 +77,7 @@ static NSMutableDictionary *_instances;
     }
 }
 
-+(instancetype)sharedControllerForNamespace:(NSString *)storageNamespace {
++ (instancetype)sharedControllerForNamespace:(NSString *)storageNamespace {
     static GBStorageController *_defaultInstance;
     @synchronized(self) {
         // verify that the namespace is legal, it can be nil or any non-empty string
@@ -103,7 +103,7 @@ static NSMutableDictionary *_instances;
     }
 }
 
--(id)objectForKeyedSubscript:(NSString *)key {
+- (id)objectForKeyedSubscript:(NSString *)key {
     [self.class _validateKey:key];
     
     // attempt to fetch from cache first
@@ -119,15 +119,15 @@ static NSMutableDictionary *_instances;
     return object;
 }
 
--(void)setObject:(id<NSCoding>)object forKeyedSubscript:(NSString *)key {
+- (void)setObject:(id<NSCoding>)object forKeyedSubscript:(NSString *)key {
     [self setObject:object forKey:key withSize:0];
 }
 
--(void)setObject:(id<NSCoding>)object forKey:(NSString *)key withSize:(NSUInteger)size {
+- (void)setObject:(id<NSCoding>)object forKey:(NSString *)key withSize:(NSUInteger)size {
     [self setObject:object forKey:key withSize:size persistImmediately:NO];
 }
 
--(void)setObject:(id<NSCoding>)object forKey:(NSString *)key withSize:(NSUInteger)size persistImmediately:(BOOL)shouldPersistImmediately {
+- (void)setObject:(id<NSCoding>)object forKey:(NSString *)key withSize:(NSUInteger)size persistImmediately:(BOOL)shouldPersistImmediately {
     [self.class _validateObject:object];
     [self.class _validateKey:key];
     
@@ -140,15 +140,15 @@ static NSMutableDictionary *_instances;
     }
 }
 
--(void)setMaxInMemoryCacheCapacity:(NSUInteger)maxInMemoryCacheCapacity {
+- (void)setMaxInMemoryCacheCapacity:(NSUInteger)maxInMemoryCacheCapacity {
     self.cache.totalCostLimit = maxInMemoryCacheCapacity;
 }
 
--(NSUInteger)maxInMemoryCacheCapacity {
+- (NSUInteger)maxInMemoryCacheCapacity {
     return self.cache.totalCostLimit;
 }
 
--(void)save:(NSString *)key {
+- (void)save:(NSString *)key {
     [self.class _validateKey:key];
     
     // get the actual object from the cache
@@ -161,7 +161,7 @@ static NSMutableDictionary *_instances;
     }
 }
 
--(void)saveAll {
+- (void)saveAll {
     // call save for all keys in the cache
     NSMutableArray *evictedKeys = [NSMutableArray new];
     for (NSString *key in [self.potentiallyCachedKeys copy]) {
@@ -181,23 +181,23 @@ static NSMutableDictionary *_instances;
     }
 }
 
--(void)preloadIntoMemory:(NSString *)key {
+- (void)preloadIntoMemory:(NSString *)key {
     [self.class _validateKey:key];
     
     [self _loadFromDiskAndAddToCache:key];
 }
 
--(void)removeFromMemory:(NSString *)key {
+- (void)removeFromMemory:(NSString *)key {
     [self.class _validateKey:key];
     
     [self _removeObjectFromCache:key];
 }
 
--(void)removeAllFromMemory {
+- (void)removeAllFromMemory {
     [self _removeAllObjectsFromCache];
 }
 
--(void)removePermanently:(NSString *)key {
+- (void)removePermanently:(NSString *)key {
     [self.class _validateKey:key];
     
     // remove the object from the cache
@@ -207,7 +207,7 @@ static NSMutableDictionary *_instances;
     [self _deleteObjectFromDiskForKey:key];
 }
 
--(void)removeAllPermanently {
+- (void)removeAllPermanently {
     // clean in memory cache
     [self _removeAllObjectsFromCache];
     
@@ -217,7 +217,7 @@ static NSMutableDictionary *_instances;
 
 #pragma mark - Util
 
-+(NSString *)_sha1DigestForString:(NSString *)string {
++ (NSString *)_sha1DigestForString:(NSString *)string {
     NSData *data = [string dataUsingEncoding:NSUTF8StringEncoding];
     uint8_t digest[CC_SHA1_DIGEST_LENGTH];
     
@@ -232,31 +232,31 @@ static NSMutableDictionary *_instances;
     return output;
 }
 
-+(void)_validateKey:(NSString *)key {
++ (void)_validateKey:(NSString *)key {
     if (!key || key.length == 0) @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"GBStorageController: key must be non-empty NSString" userInfo:nil];
 }
 
-+(void)_validateObject:(id)object {
++ (void)_validateObject:(id)object {
     if (!object || ![object conformsToProtocol:@protocol(NSCoding)]) @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"GBStorageController: object must not be nil and must conform to NSCoding protocol" userInfo:nil];
 }
 
 #pragma mark - Util:Cache
 
--(void)_removeAllObjectsFromCache {
+- (void)_removeAllObjectsFromCache {
     @synchronized(self) {
         [self.cache removeAllObjects];
         [self.potentiallyCachedKeys removeAllObjects];
     }
 }
 
--(void)_removeObjectFromCache:(NSString *)key {
+- (void)_removeObjectFromCache:(NSString *)key {
     @synchronized(self) {
         [self.cache removeObjectForKey:key];
         [self.potentiallyCachedKeys removeObject:key];
     }
 }
 
--(void)_addObjectToCache:(id)object forKey:(NSString *)key cost:(NSUInteger)cost {
+- (void)_addObjectToCache:(id)object forKey:(NSString *)key cost:(NSUInteger)cost {
     @synchronized(self) {
         [self.objectToKeyAssociationsTable setObject:key forKey:object];
         [self.cache setObject:object forKey:key cost:cost];
@@ -264,7 +264,7 @@ static NSMutableDictionary *_instances;
     }
 }
 
--(id)_objectFromCacheForKey:(NSString *)key {
+- (id)_objectFromCacheForKey:(NSString *)key {
     @synchronized(self) {
         return [self.cache objectForKey:key];
     }
@@ -272,7 +272,7 @@ static NSMutableDictionary *_instances;
 
 #pragma mark - Util:Storage
 
--(void)_ensureFileIsLatestVersionForKey:(NSString *)key {
+- (void)_ensureFileIsLatestVersionForKey:(NSString *)key {
     // we're using namespaces, which is a feature of GBStorage 2.x.x
     if (self.namespacedStoragePath != nil) {
         //noop
@@ -283,7 +283,7 @@ static NSMutableDictionary *_instances;
     }
 }
 
--(void)_upgradeFileForKeyFrom1to2:(NSString *)key {
+- (void)_upgradeFileForKeyFrom1to2:(NSString *)key {
     // 1 -> 2 changes:
     //   - added hashing to the keys when storing, so that path affecting characters like "/" don't mess with the internals
 
@@ -299,7 +299,7 @@ static NSMutableDictionary *_instances;
     }
 }
 
--(void)_clearCacheFolder {
+- (void)_clearCacheFolder {
     @synchronized(self) {
         // cleanup disk cache and temporary directory paths
         for (NSString *path in @[[self _diskCacheDirectory], [self _temporaryDirectory]]) {
@@ -320,7 +320,7 @@ static NSMutableDictionary *_instances;
     }
 }
 
--(NSString *)_documentsDirectoryPath {
+- (NSString *)_documentsDirectoryPath {
     #if TARGET_OS_IPHONE
         return [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
     #else
@@ -328,15 +328,15 @@ static NSMutableDictionary *_instances;
     #endif
 }
 
--(NSString *)_diskCacheDirectory {
+- (NSString *)_diskCacheDirectory {
     return [self _namespaceDirectorPathFromPath:[self _documentsDirectoryPath]];
 }
 
--(NSString *)_temporaryDirectory {
+- (NSString *)_temporaryDirectory {
     return [self _namespaceDirectorPathFromPath:NSTemporaryDirectory()];
 }
 
--(NSString *)_namespaceDirectorPathFromPath:(NSString *)path {
+- (NSString *)_namespaceDirectorPathFromPath:(NSString *)path {
     // if we have a namespace, then use it
     NSString *namespaceDirectorPath;
     if (self.namespacedStoragePath == kGBStorageDefaultNamespace) {
@@ -360,15 +360,15 @@ static NSMutableDictionary *_instances;
     return namespaceDirectorPath;
 }
 
--(NSString *)_diskSavePathForKey:(NSString *)key {
+- (NSString *)_diskSavePathForKey:(NSString *)key {
     return [self _diskSavePathForKey:key version:kStorageFileVersion];
 }
 
--(NSString *)_temporarySavePathForKey:(NSString *)key {
+- (NSString *)_temporarySavePathForKey:(NSString *)key {
     return [[self _temporaryDirectory] stringByAppendingPathComponent:[self _diskSaveFilenameForKey:key version:kStorageFileVersion]];
 }
 
--(NSString *)_diskSaveFilenameForKey:(NSString *)key version:(NSUInteger)version {
+- (NSString *)_diskSaveFilenameForKey:(NSString *)key version:(NSUInteger)version {
     //construct filename
     switch (version) {
         case 1: {
@@ -385,7 +385,7 @@ static NSMutableDictionary *_instances;
     }
 }
 
--(NSString *)_diskSavePathForKey:(NSString *)key version:(NSUInteger)version {
+- (NSString *)_diskSavePathForKey:(NSString *)key version:(NSUInteger)version {
     NSString *directory;
     
     //construct path
@@ -408,7 +408,7 @@ static NSMutableDictionary *_instances;
     return [directory stringByAppendingPathComponent:[self _diskSaveFilenameForKey:key version:version]];
 }
 
--(void)_saveObject:(id <NSCoding>)object toDiskForKey:(NSString *)key {
+- (void)_saveObject:(id <NSCoding>)object toDiskForKey:(NSString *)key {
     // migrate file if needed
     [self _ensureFileIsLatestVersionForKey:key];
     
@@ -424,7 +424,7 @@ static NSMutableDictionary *_instances;
     }
 }
 
--(id)_readObjectFromDiskForKey:(NSString *)key {
+- (id)_readObjectFromDiskForKey:(NSString *)key {
     // migrate file if needed
     [self _ensureFileIsLatestVersionForKey:key];
     
@@ -466,13 +466,13 @@ static NSMutableDictionary *_instances;
     return savedObject;
 }
 
--(NSUInteger)_sizeForObjectOnDiskForKey:(NSString *)key {
+- (NSUInteger)_sizeForObjectOnDiskForKey:(NSString *)key {
     @synchronized(self) {
         return (NSUInteger)[[[NSFileManager defaultManager] attributesOfItemAtPath:[self _diskSavePathForKey:key] error:nil] fileSize];
     }
 }
 
--(void)_deleteObjectFromDiskForKey:(NSString *)key {
+- (void)_deleteObjectFromDiskForKey:(NSString *)key {
     // migrate file if needed
     [self _ensureFileIsLatestVersionForKey:key];
     
