@@ -21,21 +21,21 @@
 
 #import <CommonCrypto/CommonDigest.h>
 
-NSString * const kGBStorageDefaultNamespace =                   nil;// NEVER change this!
-NSUInteger const kGBStorageMemoryCapUnlimited =                 0;
+NSString * const kGBStorageDefaultNamespace =                       nil;// NEVER change this!
+NSUInteger const kGBStorageMemoryCapUnlimited =                     0;
 
-static NSUInteger const kStorageFileVersion =                   2;
-static NSString * const kDocumentsDirectorySubfolder =          @"GBStorage"; // NEVER change this!
-static NSString * const kFilenamePrefix =                       @"gb-storage-controller-file";// NEVER change this!
-static NSUInteger const kDefaultStorageMemoryCap =              kGBStorageMemoryCapUnlimited;
+static NSUInteger const kStorageFileVersion =                       2;
+static NSString * const kDocumentsDirectorySubfolder =              @"GBStorage"; // NEVER change this!
+static NSString * const kFilenamePrefix =                           @"gb-storage-controller-file";// NEVER change this!
+static NSUInteger const kDefaultStorageMemoryCap =                  kGBStorageMemoryCapUnlimited;
 
 @interface GBStorageController () <NSCacheDelegate>
 
-@property (copy, atomic, readonly) NSString                     *namespacedStoragePath;
-@property (strong, atomic, readonly) NSMutableSet               *potentiallyCachedKeys;
-@property (strong, atomic, readonly) NSCache                    *cache;
+@property (copy, atomic, readonly) NSString                         *namespacedStoragePath;
+@property (strong, atomic, readonly) NSMutableSet<NSString *>       *potentiallyCachedKeys;
+@property (strong, atomic, readonly) NSCache<NSString*, id>         *cache;
 
-@property (strong, atomic, readonly) NSMapTable                 *objectToKeyAssociationsTable;
+@property (strong, atomic, readonly) NSMapTable<id, NSString *>     *objectToKeyAssociationsTable;
 
 @end
 
