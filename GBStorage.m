@@ -512,7 +512,13 @@ static NSMutableDictionary *_instances;
     NSString *key = [self.objectToKeyAssociationsTable objectForKey:obj];
     [self.potentiallyCachedKeys removeObject:key];
     
-    NSLog(@"will evict: %@ -> %@", key, obj);
+    // we jump to the main thread, firstly to guarantee that we are calling this on the main thread, and secondly to ensure that the code is executed outside of this frame as performing changes to the cache at this time is not supported by NSCache
+    dispatch_async(dispatch_get_main_queue(), ^{
+        // notify our delegate that the object has been evicted
+        if ([self.delegate respondsToSelector:@selector(storage:didEvictObject:forKey:)]) {
+            [self.delegate storage:self didEvictObject:obj forKey:key];
+        }
+    });    
 }
 
 @end

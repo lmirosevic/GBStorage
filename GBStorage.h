@@ -20,6 +20,8 @@
 extern NSString * _Nonnull const kGBStorageDefaultNamespace;
 extern NSUInteger const kGBStorageMemoryCapUnlimited;
 
+@protocol GBStorageDelegate;
+
 @interface GBStorageController : NSObject
 
 /**
@@ -42,6 +44,11 @@ GBStorageController * _Nonnull GBStorage(NSString * _Nonnull storageNamespace);
   Pass kGBStorageDefaultNamespace or nil if you don't want to use a namespace, or for backwards compatibility with GBStorage 1.x.x
  */
 + (nonnull instancetype)sharedControllerForNamespace:(nullable NSString *)storageNamespace;
+
+/**
+ The delegate object for this GBStorage instance.
+ */
+@property (weak, nonatomic, nullable) id<GBStorageDelegate> delegate;
 
 /**
  Fetches an object from the cache. Tries memory first, then disk. If no object found for the key, returns nil.
@@ -106,5 +113,16 @@ GBStorageController * _Nonnull GBStorage(NSString * _Nonnull storageNamespace);
  Returns the namespace of this storage controller
  */
 @property (strong, nonatomic, readonly, nullable) NSString *storageNamespace;
+
+@end
+
+@protocol GBStorageDelegate <NSObject>
+
+/**
+ Called when the GBStorage instance has evicted an object from the cache.
+ 
+ Whether or not the object is still cached inside the implementation of this method is undefined. Generally one should assume that the object has been evicted, or if not will be very soon.
+ */
+- (void)storage:(GBStorageController *)storageController didEvictObject:(nonnull id)object forKey:(nonnull NSString *)key;
 
 @end
