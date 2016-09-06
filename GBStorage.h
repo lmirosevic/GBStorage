@@ -131,6 +131,7 @@ GBStorageController * _Nonnull GBStorage(NSString * _Nonnull storageNamespace);
 @end
 
 @protocol GBStorageDelegate <NSObject>
+@optional
 
 /**
  Called when the GBStorage instance has evicted an object from the cache.
