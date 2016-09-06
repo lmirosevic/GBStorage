@@ -138,6 +138,6 @@ GBStorageController * _Nonnull GBStorage(NSString * _Nonnull storageNamespace);
  
  Whether or not the object is still cached inside the implementation of this method is undefined. Generally one should assume that the object has been evicted, or if not will be very soon.
  */
-- (void)storage:(GBStorageController *)storageController didEvictObject:(nonnull id)object forKey:(nonnull NSString *)key;
+- (void)storage:(nonnull GBStorageController *)storageController didEvictObject:(nonnull id)object forKey:(nonnull NSString *)key;
 
 @end
