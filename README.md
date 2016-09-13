@@ -91,7 +91,7 @@ Keys need to be of type `NSString`. They are automatically copied to avoid undef
 
 When using namespaces, if you mutate an object which has been cached in multiple namespaces, all namespaces will see the new value (again because it simply holds a strong pointer to it).
 
-Objects which you pass to `GBStorageController` must conform to the `NSCoding` protocol. This is so that objects can be serialised to disk.
+Objects which you pass to `GBStorageController` must conform to the `NSCoding` protocol. Alternatively you can provide your own serialiser and deserialiser if you want, e.g. for images or json.
 
 Naming
 ------------
@@ -111,7 +111,7 @@ Cocoapod library has been renamed from `GBStorageController` to `GBStorage` for 
 Copyright & License
 ------------
 
-Copyright 2014 Luka Mirosevic
+Copyright 2016 Luka Mirosevic
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this work except in compliance with the License. You may obtain a copy of the License in the LICENSE file, or at:
 
