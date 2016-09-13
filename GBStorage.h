@@ -17,8 +17,14 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-extern NSString * _Nonnull const kGBStorageDefaultNamespace;
-extern NSUInteger const kGBStorageMemoryCapUnlimited;
+FOUNDATION_EXTERN NSString * _Nonnull const kGBStorageDefaultNamespace;
+FOUNDATION_EXTERN NSUInteger const kGBStorageMemoryCapUnlimited;
+
+typedef NSData * _Nullable(^GBStorageSerialiser)(id _Nonnull object);
+typedef id _Nullable(^GBStorageDeserialiser)(NSData * _Nonnull data);
+
+FOUNDATION_EXTERN GBStorageSerialiser _Nonnull const kGBStorageNSCodingSerialiser;
+FOUNDATION_EXTERN GBStorageDeserialiser _Nonnull const kGBStorageNSCodingDeserialiser;
 
 @protocol GBStorageDelegate;
 
@@ -58,21 +64,31 @@ GBStorageController * _Nonnull GBStorage(NSString * _Nonnull storageNamespace);
 /**
  Stores an object into the in memory cache. To persist the object to disk so it's available on subsequent app launches, call `-[GBStorageController save:]`.
  */
-- (void)setObject:(nonnull id<NSCoding>)object forKeyedSubscript:(nonnull NSString *)key;
+- (void)setObject:(nonnull id)object forKeyedSubscript:(nonnull NSString *)key;
 
 /**
  Stores an object into the in memory cache, with a cost associated with it. It will evict objects according LRU-style once the memory capacity is exceeded.
  */
-- (void)setObject:(nonnull id<NSCoding>)object forKey:(nonnull NSString *)key withSize:(NSUInteger)size;
+- (void)setObject:(nonnull id)object forKey:(nonnull NSString *)key withSize:(NSUInteger)size;
 /**
  Stores an object into the in memory cache, with a cost associated with it. It will evict objects according LRU-style once the memory capacity is exceeded. If `shouldPersistImmediately` is set to YES, then the object is immediately saved. Use this for cases where you have set a memory cap but want to guarantee that objects will remain cached on disk.
  */
-- (void)setObject:(nonnull id<NSCoding>)object forKey:(nonnull NSString *)key withSize:(NSUInteger)size persistImmediately:(BOOL)shouldPersistImmediately;
+- (void)setObject:(nonnull id)object forKey:(nonnull NSString *)key withSize:(NSUInteger)size persistImmediately:(BOOL)shouldPersistImmediately;
 
 /**
  Lets you set a memory cap for how much the in-memory cache is allowed to use. In terms of cost, as defined by the cost parameter sent to `-[GBStorageController setObject:forKey:withCost:]`
  */
 @property (assign, nonatomic) NSUInteger maxInMemoryCacheCapacity; // default: kGBStorageMemoryCapUnlimited
+
+/**
+ The serialiser for this namespace. Defaults to NSCoding.
+ */
+@property (copy, atomic, nonnull) GBStorageSerialiser serialiser;
+
+/**
+ The deserialiser for this namespace. Defaults to NSCoding.
+ */
+@property (copy, atomic, nonnull) GBStorageDeserialiser deserialiser;
 
 /**
  Returns YES if the object for `key` is in the in-memory cache.

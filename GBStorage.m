@@ -24,6 +24,16 @@
 NSString * const kGBStorageDefaultNamespace =                       nil;// NEVER change this!
 NSUInteger const kGBStorageMemoryCapUnlimited =                     0;
 
+GBStorageSerialiser const kGBStorageNSCodingSerialiser = ^NSData *(id object) {
+    NSLog(@"coding");
+    return [NSKeyedArchiver archivedDataWithRootObject:object];
+};
+
+GBStorageDeserialiser const kGBStorageNSCodingDeserialiser = ^id(NSData *data) {
+    NSLog(@"decoding");
+    return [NSKeyedUnarchiver unarchiveObjectWithData:data];
+};
+
 static NSUInteger const kStorageFileVersion =                       2;
 static NSString * const kDocumentsDirectorySubfolder =              @"GBStorage"; // NEVER change this!
 static NSString * const kFilenamePrefix =                           @"gb-storage-controller-file";// NEVER change this!
@@ -55,6 +65,10 @@ static NSUInteger const kDefaultStorageMemoryCap =                  kGBStorageMe
         _cache.totalCostLimit = kDefaultStorageMemoryCap;
         _cache.delegate = self;
         _cachedKeysMutable = [NSMutableSet new];
+        
+        // default serialisers
+        self.serialiser = kGBStorageNSCodingSerialiser;
+        self.deserialiser = kGBStorageNSCodingDeserialiser;
         
         _objectToKeyAssociationsTable = [NSMapTable mapTableWithKeyOptions:(NSPointerFunctionsObjectPointerPersonality | NSPointerFunctionsWeakMemory) valueOptions:NSPointerFunctionsCopyIn];
     }
@@ -119,15 +133,15 @@ static NSMutableDictionary *_instances;
     return object;
 }
 
-- (void)setObject:(id<NSCoding>)object forKeyedSubscript:(NSString *)key {
+- (void)setObject:(id)object forKeyedSubscript:(NSString *)key {
     [self setObject:object forKey:key withSize:0];
 }
 
-- (void)setObject:(id<NSCoding>)object forKey:(NSString *)key withSize:(NSUInteger)size {
+- (void)setObject:(id)object forKey:(NSString *)key withSize:(NSUInteger)size {
     [self setObject:object forKey:key withSize:size persistImmediately:NO];
 }
 
-- (void)setObject:(id<NSCoding>)object forKey:(NSString *)key withSize:(NSUInteger)size persistImmediately:(BOOL)shouldPersistImmediately {
+- (void)setObject:(id)object forKey:(NSString *)key withSize:(NSUInteger)size persistImmediately:(BOOL)shouldPersistImmediately {
     [self.class _validateObject:object];
     [self.class _validateKey:key];
     
@@ -234,7 +248,7 @@ static NSMutableDictionary *_instances;
 }
 
 + (void)_validateObject:(id)object {
-    if (!object || ![object conformsToProtocol:@protocol(NSCoding)]) @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"GBStorageController: object must not be nil and must conform to NSCoding protocol" userInfo:nil];
+    if (!object) @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"GBStorageController: object must not be nil and must conform to NSCoding protocol" userInfo:nil];
 }
 
 #pragma mark - Util:Cache
@@ -265,6 +279,16 @@ static NSMutableDictionary *_instances;
     @synchronized(self) {
         return [self.cache objectForKey:key];
     }
+}
+
+#pragma mark - Util:Marshalling
+
+- (NSData *)_serialisedDataForObject:(id)object {
+    return self.serialiser(object);
+}
+
+- (id)_objectForSerialisedData:(NSData *)data {
+    return self.deserialiser(data);
 }
 
 #pragma mark - Util:Storage
@@ -405,17 +429,19 @@ static NSMutableDictionary *_instances;
     return [directory stringByAppendingPathComponent:[self _diskSaveFilenameForKey:key version:version]];
 }
 
-- (void)_saveObject:(id <NSCoding>)object toDiskForKey:(NSString *)key {
+- (void)_saveObject:(id)object toDiskForKey:(NSString *)key {
     // migrate file if needed
     [self _ensureFileIsLatestVersionForKey:key];
     
     NSString *tempPath = [self _temporarySavePathForKey:key];
     NSString *savePath = [self _diskSavePathForKey:key];
 
-    // save to disk
     @synchronized(self) {
+        // first serialise the data
+        NSData *serialisedData = [self _serialisedDataForObject:object];
+        
         // two phase save strategy. First archive to temporary file and then move temporary file to desired save location
-        if ([NSKeyedArchiver archiveRootObject:object toFile:tempPath]) {
+        if ([serialisedData writeToFile:tempPath atomically:YES]) {
             [[NSFileManager defaultManager] replaceItemAtURL:[NSURL fileURLWithPath:savePath] withItemAtURL:[NSURL fileURLWithPath:tempPath] backupItemName:nil options:0 resultingItemURL:nil error:nil];
         }
     }
@@ -430,10 +456,13 @@ static NSMutableDictionary *_instances;
         @synchronized(self) {
             if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
 #ifdef DEBUG
-                return [NSKeyedUnarchiver unarchiveObjectWithFile:path];
+                
+                NSData *fileData = [NSData dataWithContentsOfFile:path];
+                return [self _objectForSerialisedData:fileData];
 #else
                 @try {
-                    return [NSKeyedUnarchiver unarchiveObjectWithFile:path];
+                    NSData *fileData = [NSData dataWithContentsOfFile:path];
+                    return [self _objectForSerialisedData:fileData];
                 }
                 @catch (NSException *exception) {
                     return nil;
