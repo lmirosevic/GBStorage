@@ -25,12 +25,10 @@ NSString * const kGBStorageDefaultNamespace =                       nil;// NEVER
 NSUInteger const kGBStorageMemoryCapUnlimited =                     0;
 
 GBStorageSerialiser const kGBStorageNSCodingSerialiser = ^NSData *(id object) {
-    NSLog(@"coding");
     return [NSKeyedArchiver archivedDataWithRootObject:object];
 };
 
 GBStorageDeserialiser const kGBStorageNSCodingDeserialiser = ^id(NSData *data) {
-    NSLog(@"decoding");
     return [NSKeyedUnarchiver unarchiveObjectWithData:data];
 };
 
